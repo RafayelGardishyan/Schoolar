@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+  <h2>My lists</h2>
+  <h3>Welcome {{ username }}</h3>
+
+  <table border="1">
+  <tr>
+  <td>Name</td>
+  <td>Question Subject</td>
+  <td>Answer Subject</td>
+  <td>Test!</td>
+</tr>
+{% for list in lists %}
+<tr>
+  <td>{{ list.name }}</td>
+  <td>{{ list.question_subject }}</td>
+  <td>{{ list.answer_subject }}</td>
+  <td><a href="app/test/{{ list.get_test }}">Test!</a></td>
+</tr>
+{% endfor %}
+</table>
+{% endblock %}

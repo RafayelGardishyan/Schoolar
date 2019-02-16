@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>Add list</h2>
+
+<form method="post" action="">
+{% csrf_token %}
+    <table >
+    <tr>
+    <td>
+    <label for="name">List name:</label>
+    </td>
+    <td>
+    <input name="name" type="text">
+    </td>
+    </tr>
+        <tr>
+            <td>
+                <select name="question_subject">
+                {% for subject in subjects %}
+                <option value="{{ subject.pk }}">{{ subject.name }}</option>
+                {% endfor %}
+                </select>
+            </td>
+            <td>
+                <select name="answer_subject">
+                {% for subject in subjects %}
+                <option value="{{ subject.pk }}">{{ subject.name }}</option>
+                {% endfor %}
+            </select>
+            </td>
+        </tr>
+        <tr>
+            <td id="questions">
+                <input type="text" id="question_1" name="question_1">
+            </td>
+            <td id="answers">
+                <input type="text" id="answer_1" name="answer_1">
+            </td>
+        </tr>
+    </table>
+    <button type="button" onclick="add_inputs()">+</button>
+    <br>
+    <input type="submit" value="Submit" name="submit">
+</form>
+
+<script>
+    let question_index = 2;
+function add_inputs() {
+  let values = {};
+  for (let i=1; i<question_index; i++){
+      values.i = {
+          question: document.getElementById("question_" + i).value,
+          answer: document.getElementById("answer_" + i).value
+      };
+      i++;
+  }
+  document.getElementById('questions').innerHTML += '<br> <input type="text" id="question_' + question_index + '" name="question_' + question_index + '">';
+  document.getElementById('answers').innerHTML += '<br> <input type="text" id="answer_' + question_index + '" name="answer_' + question_index + '">';
+
+  for (let i=1; i<question_index; i++){
+      document.getElementById("question_" + i).value = values.i.question;
+      document.getElementById("answer_" + i).value = values.i.answer;
+      i++;
+  }
+
+ question_index++;
+}
+</script>
+
+{% endblock %}
