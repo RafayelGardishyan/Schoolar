@@ -19,8 +19,8 @@
   <td>{{ list.name }}</td>
   <td>{{ list.question_subject }}</td>
   <td>{{ list.answer_subject }}</td>
-  <td><a href="/app/delete/{{ list.get_test }}">Delete</a></td>
   <td><a href="/app/test/{{ list.get_test }}">Test</a></td>
+  <td><a href="/app/delete/{{ list.get_test }}">Delete</a></td>
 </tr>
 {% endfor %}
 </table>
