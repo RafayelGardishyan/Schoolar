@@ -28,4 +28,4 @@ class List(models.Model):
         return self.name
 
     def get_test(self):
-        return str(self.pk) + "/" + str(self.owner.id)
+        return str(self.pk)

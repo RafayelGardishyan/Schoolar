@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 from .forms import UserForm
 from .models import Subject, List, Question
 
+
 def index(request):
     if request.user.is_authenticated:
         return redirect('/app/home')
@@ -80,4 +81,15 @@ def lists(request):
     return render(request, 'app/lists.html', {
         'lists': n_lists,
         'username': request.user.username
+    })
+
+
+def test(request, list_id):
+    try:
+        list = List.objects.get(pk=list_id, owner=request.user)
+    except:
+        return redirect('/app/lists')
+
+    return render(request, 'app/test.html', {
+        'questions': list.questions.all()
     })

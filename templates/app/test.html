@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    {% for question in questions %}
+
+        <p>{{ question.question }} : {{ question.answer }}</p>
+
+    {% endfor %}
+
+{% endblock %}

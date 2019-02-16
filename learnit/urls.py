@@ -7,6 +7,7 @@ urlpatterns = [
     path('app/home/', views.app_home, name='app_home'),
     path('app/add/', views.add_list, name='add_list'),
     path('app/lists/', views.lists, name='lists'),
+    path('app/test/<int:list_id>', views.test, name='test'),
     path('login/', auth_views.login, name='login'),
     path('logout/', auth_views.logout, {'next_page': '/logged_out'}, name='logout'),
     path('logged_out/', views.logged_out, name='logged_out'),
