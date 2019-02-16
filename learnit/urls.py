@@ -9,8 +9,8 @@ urlpatterns = [
     path('app/lists/', views.lists, name='lists'),
     path('app/test/<int:list_id>', views.test, name='test'),
     path('app/delete/<int:list_id>', views.delete, name='test'),
-    path('login/', auth_views.login, name='login'),
-    path('logout/', auth_views.logout, {'next_page': '/logged_out'}, name='logout'),
+    path('login/', auth_views.LoginView.as_view(template_name='registration/login.html'), name='login'),
+    path('logout/', auth_views.LogoutView.as_view(template_name='registration/logout.html'), {'next_page': '/logged_out'}, name='logout'),
     path('logged_out/', views.logged_out, name='logged_out'),
     path('register', views.register)
 ]
