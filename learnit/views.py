@@ -93,3 +93,17 @@ def test(request, list_id):
     return render(request, 'app/test.html', {
         'questions': list.questions.all()
     })
+
+
+def delete(request, list_id):
+    try:
+        n_list = List.objects.get(pk=list_id, owner=request.user)
+    except:
+        return redirect('/app/lists')
+
+    for question in n_list.questions.all():
+        question.delete()
+
+    n_list.delete()
+
+    return redirect("/app/lists")

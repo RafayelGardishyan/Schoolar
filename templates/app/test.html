@@ -2,10 +2,66 @@
 
 {% block content %}
 
-    {% for question in questions %}
+    <h2>Test</h2>
+    <br>
+    <h3>Question: <span id="question"></span></h3>
+    <h4>Your answer is: <span id="answer_indicator"></span></h4>
+    <input id="input_box" type="text" placeholder="Inout text here" size="50">
+    <button onclick="check()">Enter</button>
+    <script >
 
-        <p>{{ question.question }} : {{ question.answer }}</p>
+    let current_question = undefined;
 
-    {% endfor %}
+    questions = [
+      {% for question in questions %}
+        {
+            question: "{{ question.question }}",
+            answer: "{{ question.answer }}"
+        },
+      {% endfor %}
+
+    ]
+
+    difficult_questions = []
+
+    function getWord() {
+      return questions.splice(Math.floor(Math.random()*questions.length), 1)[0];
+    }
+
+    function setWord(word) {
+      document.getElementById("question").innerText = word.question;
+    }
+
+    function include(arr, obj) {
+    for(var i=0; i<arr.length; i++) {
+        if (arr[i] == obj) return true;
+    }
+    return false;
+}
+
+    function wrongAnswer(question){
+        if (!include(difficult_questions, question)){
+            difficult_questions.push(question);
+        }
+        questions.splice(3, 0, question);
+    }
+
+    function check(){
+        let answer = document.getElementById("input_box").value;
+        if (answer == current_question.answer){
+            current_question = getWord();
+            setWord(current_question);
+            document.getElementById("answer_indicator").innerText = "Good!";
+        } else {
+            current_question = getWord();
+            setWord(current_question);
+            wrongAnswer(current_question);
+            document.getElementById("answer_indicator").innerText = "Wrong";
+        }
+    }
+
+    current_question = getWord();
+    setWord(current_question);
+</script>
 
 {% endblock %}
