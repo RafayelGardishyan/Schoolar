@@ -1,8 +1,8 @@
-from django.core import serializers
-from django.http import JsonResponse
+import json
+
 from django.shortcuts import render, redirect
 from .forms import UserForm
-from .models import Subject, List, Question
+from .models import Subject, List, Question, TestResults
 
 
 def index(request):
@@ -64,7 +64,7 @@ def add_list(request):
 
         n_list.save()
 
-        return JsonResponse(serializers.serialize('json', [n_list]), safe=False)
+        return redirect("/lists")
 
     subjects = Subject.objects.all()
 
@@ -107,3 +107,28 @@ def delete(request, list_id):
     n_list.delete()
 
     return redirect("/app/lists")
+
+
+def register_results(request):
+    if request.method != 'POST':
+        return redirect('/')
+
+    result = TestResults()
+    result.user = request.user
+    result.grade = float(request.POST["average_score"])
+    result.save()
+
+    diff_quest = json.loads(request.POST["difficult_words"])
+
+    for question in diff_quest:
+        result.difficult_questions.add(Question.objects.get(question=question["question"], answer=question["answer"]))
+
+    result.save()
+
+    return redirect('/app/result/' + str(result.pk))
+
+
+def results(request, result_id):
+    return render(request, 'app/result.html', {
+        'result': TestResults.objects.get(pk=result_id)
+    })
