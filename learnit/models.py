@@ -17,6 +17,12 @@ class Subject(models.Model):
         return self.name
 
 
+class TestResults(models.Model):
+    grade = models.IntegerField()
+    user = models.ForeignKey(to=User, on_delete=models.CASCADE)
+    difficult_questions = models.ManyToManyField(to=Question)
+
+
 class List(models.Model):
     name = models.CharField(max_length=255)
     owner = models.ForeignKey(to=User, on_delete=models.CASCADE)
