@@ -120,7 +120,8 @@ def test(request, list_id):
     settings = {
         'question_subject': request.POST["question_subject"],
         'mode': request.POST["test_mode"],
-        'delay': float(request.POST["delay"])*1000
+        'delay': float(request.POST["delay"])*1000,
+        'case_sensitive': request.POST['case_sensitive']
     }
 
     print(settings)

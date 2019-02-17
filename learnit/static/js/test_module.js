@@ -10,6 +10,19 @@
         averageScore: 0
     };
 
+    String.prototype.shuffle = function () {
+            var a = this.split(""),
+                n = a.length;
+
+            for(var i = n - 1; i > 0; i--) {
+                var j = Math.floor(Math.random() * (i + 1));
+                var tmp = a[i];
+                a[i] = a[j];
+                a[j] = tmp;
+            }
+            return a.join("");
+        };
+
     function getAverageScore(){
         stats.averageScore = parseFloat((10 / (stats.goodAnswers + stats.wrongAnswers) * stats.goodAnswers).toFixed(2));
     }
@@ -61,11 +74,21 @@
       }
 
     function setWord(word) {
-        if (settings.question_subject === "question") {
-            document.getElementById("question").innerText = word.question;
+        if (settings.mode === "shuffle"){
+            if (settings.question_subject === "question") {
+                document.getElementById("question").innerText = word.question.shuffle().toLowerCase();;
+            } else {
+                document.getElementById("question").innerText = word.answer.shuffle().toLowerCase();;
+            }
         } else {
-            document.getElementById("question").innerText = word.answer;
+
+            if (settings.question_subject === "question") {
+                document.getElementById("question").innerText = word.question;
+            } else {
+                document.getElementById("question").innerText = word.answer;
+            }
         }
+
         document.getElementById("input_box").value = "";
     }
 
@@ -86,13 +109,26 @@
 
     function check(){
         let good_answer;
-        if (settings.mode === "question") {
+        if (settings.question_subject === "question") {
             good_answer = current_question.answer;
         } else {
             good_answer = current_question.question;
         }
+
+        if (settings.mode === "shuffle"){
+            if (settings.question_subject === "question") {
+                good_answer = current_question.question;
+            } else {
+                good_answer = current_question.answer;
+            }
+        }
+
         let answer = document.getElementById("input_box").value;
-        if (answer == good_answer){
+        if (settings.case_sensitive === "no"){
+            answer = answer.toLowerCase();
+            good_answer = good_answer.toLowerCase();
+        }
+        if (answer === good_answer){
             stats.goodAnswers++;
             document.getElementById("answer_indicator").innerText = "Correct";
             document.getElementById("answer_indicator").style.color = good_color;
@@ -185,6 +221,6 @@
 
     if (settings.mode === 'flashcards'){
         document.getElementById('translate_mode').style.display = 'none';
-    } else if (settings.mode === 'translate'){
+    } else if (settings.mode === 'translate' || settings.mode === 'shuffle'){
         document.getElementById('flashcard_mode').style.display = 'none';
     }

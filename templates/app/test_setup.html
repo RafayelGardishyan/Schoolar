@@ -9,15 +9,23 @@
         <tr>
             <td>Question subject:</td>
             <td>
-                <input type="radio" name="question_subject" value="question" checked>{{ list.question_subject }} <br>
+                <input type="radio" name="question_subject" value="question" checked="checked">{{ list.question_subject }} <br>
                 <input type="radio" name="question_subject" value="answer">{{ list.answer_subject }}
             </td>
         </tr>
         <tr>
             <td>Test mode:</td>
             <td>
-                <input type="radio" name="test_mode" value="translate" checked>Translate <br>
-                <input type="radio" name="test_mode" value="flashcards" checked>Flashcards
+                <input type="radio" name="test_mode" value="translate" checked="checked">Translate <br>
+                <input type="radio" name="test_mode" value="flashcards" >Flashcards <br>
+                <input type="radio" name="test_mode" value="shuffle" >Shuffled
+            </td>
+        </tr>
+        <tr>
+            <td>Case sensitive:</td>
+            <td>
+                <input type="radio" name="case_sensitive" value="yes" checked="checked">Yes
+                <input type="radio" name="case_sensitive" value="no" >No
             </td>
         </tr>
         <tr>
