@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+  <h2>Edit profile</h2>
+  <h3>User data</h3>
+  <form method="post" action="">
+  {% csrf_token %}
+  <table>
+    <tr>
+        <td>Username:</td>
+        <td><input type="text" name="username" value="{{ user.username }}"></td>
+    </tr>
+    <tr>
+        <td>First Name:</td>
+        <td><input type="text" name="first_name" value="{{ user.first_name }}"></td>
+    </tr>
+    <tr>
+        <td>Last Name:</td>
+        <td><input type="text" name="last_name" value="{{ user.last_name }}"></td>
+    </tr>
+    <tr>
+        <td>E-Mail:</td>
+        <td><input type="text" name="email" value="{{ user.email }}"></td>
+    </tr>
+  </table>
+  <input type="submit" value="Save">
+  </form>
+{% endblock %}

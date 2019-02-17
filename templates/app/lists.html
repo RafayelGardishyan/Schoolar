@@ -4,8 +4,9 @@
 
 {% block content %}
   <h2>My lists</h2>
-  <h4><a class="link_button" href="/app/add">Add a list</a></h4>
+  <h4><a class="link_button" href="/app/add">Add a list &nbsp;&nbsp;&nbsp;&nbsp;<i class="fas fa-plus"></i></a></h4>
 
+  {% if lists %}
   <table>
   <tr id="table_header">
   <td>Name</td>
@@ -24,4 +25,5 @@
 </tr>
 {% endfor %}
 </table>
+{% endif %}
 {% endblock %}

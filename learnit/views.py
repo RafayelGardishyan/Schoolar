@@ -38,7 +38,7 @@ def register(request):
 
             print('Sent mail to: {}'.format(user.email))
 
-            return redirect("/")
+            return redirect("/login")
             # return render(request, 'registration/success.html', {'user': user})
 
     return render(request, "registration/register.html", {
@@ -186,3 +186,20 @@ def profile(request):
         'user': user,
         'results': n_results
     })
+
+
+def edit_profile(request):
+    if not request.user.is_authenticated:
+        return redirect('/login')
+
+    if request.method == 'POST':
+        user = request.user
+        user.username = request.POST["username"]
+        user.first_name = request.POST["first_name"]
+        user.last_name = request.POST["last_name"]
+        user.email = request.POST["email"]
+        user.save()
+
+        return redirect('/user/profile')
+
+    return render(request, 'registration/edit_profile.html', {'user': request.user})
