@@ -124,3 +124,15 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATIC_ROOT = 'learnit/static/'
+
+# DEVELOPMENT_EMAIL_SERVER = {
+#     'host:': 'smtp.mailtrap.io',
+#     'port': '25',
+#     'username': '57908264c274f7',
+#     'password': '8db09501de5643'
+# }
+
+EMAIL_HOST = 'smtp.mailtrap.io'
+EMAIL_HOST_USER = '57908264c274f7'
+EMAIL_HOST_PASSWORD = '8db09501de5643'
+EMAIL_PORT = '2525'

@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+  <h2>Profile</h2>
+  <h3>User data</h3>
+  <h4><a href="/user/profile/edit">Edit</a></h4>
+  <table>
+  <tr>
+  <td>
+  Username:
+</td>
+<td>{{ user.username }}</td>
+</tr>
+  <tr>
+  <td>
+  First Name:
+</td>
+<td>{{ user.first_name }}</td>
+</tr>
+  <tr>
+  <td>
+  Last Name:
+</td>
+<td>{{ user.last_name }}</td>
+</tr>
+  <tr>
+  <td>
+  E-Mail:
+</td>
+<td>{{ user.email }}</td>
+</tr>
+</table>
+<h3>Stats</h3>
+
+<div id="results">
+{% include "app/applets/result_graph.html" %}
+</div>
+{% endblock %}

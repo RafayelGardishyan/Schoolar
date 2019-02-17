@@ -15,6 +15,10 @@
     <input name="name" type="text">
     </td>
     </tr>
+    <tr>
+    <td>Question Subject</td>
+    <td>Answer Subject</td>
+</tr>
         <tr>
             <td>
                 <select name="question_subject">
@@ -41,6 +45,7 @@
         </tr>
     </table>
     <button type="button" onclick="add_inputs()">+</button>
+    <button type="button" onclick="remove_inputs()">-</button>
     <br>
     <input type="submit" value="Submit" name="submit">
 </form>
@@ -56,8 +61,8 @@ function add_inputs() {
       };
       i++;
   }
-  document.getElementById('questions').innerHTML += '<br> <input type="text" id="question_' + question_index + '" name="question_' + question_index + '">';
-  document.getElementById('answers').innerHTML += '<br> <input type="text" id="answer_' + question_index + '" name="answer_' + question_index + '">';
+  document.getElementById('questions').innerHTML += '<br id="br_q_' + question_index +'"> <input type="text" id="question_' + question_index + '" name="question_' + question_index + '">';
+  document.getElementById('answers').innerHTML += '<br id="br_a_' + question_index +'"> <input type="text" id="answer_' + question_index + '" name="answer_' + question_index + '">';
 
   for (let i=1; i<question_index; i++){
       document.getElementById("question_" + i).value = values.i.question;
@@ -67,6 +72,30 @@ function add_inputs() {
 
  question_index++;
 }
+
+function remove_inputs() {
+  if (question_index === 2){
+      return;
+  }
+
+  question_index--;
+  let element = document.getElementById('question_' + (question_index));
+  element.parentNode.removeChild(element);
+
+  element = document.getElementById('answer_' + (question_index));
+  element.parentNode.removeChild(element);
+
+  element = document.getElementById('br_q_' + (question_index));
+  element.parentNode.removeChild(element);
+
+  element = document.getElementById('br_a_' + (question_index));
+  element.parentNode.removeChild(element);
+}
+
+for (let i=0; i<5; i++){
+    add_inputs();
+}
+
 </script>
 
 {% endblock %}

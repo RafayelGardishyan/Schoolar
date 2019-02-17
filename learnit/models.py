@@ -20,7 +20,11 @@ class Subject(models.Model):
 class TestResults(models.Model):
     grade = models.IntegerField()
     user = models.ForeignKey(to=User, on_delete=models.CASCADE)
+    datetime = models.DateTimeField(auto_now=True)
     difficult_questions = models.ManyToManyField(to=Question)
+
+    def get_difficult_words_count(self):
+        return self.difficult_questions.all().count()
 
 
 class List(models.Model):

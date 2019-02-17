@@ -4,6 +4,7 @@
 
     <h2>Your Results</h2>
     <h3>Your grade: {{ result.grade }}</h3>
+    {% if result.difficult_questions.all %}
     <h3>Difficult Questions:</h3>
     <table>
     {% for question in result.difficult_questions.all %}
@@ -12,6 +13,7 @@
     <td>{{ question.answer }}</td>
 </tr>
 {% endfor %}
+{% endif %}
 </table>
 
 {% endblock %}

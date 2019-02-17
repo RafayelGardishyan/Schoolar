@@ -1,0 +1,9 @@
+Hello {{ username }}!
+You just created an account on Learn It.
+Your username is {{ username }}. You can change it when you log in.
+If It's not you then email us on example@website.com.
+
+Thank you and have much fun learning words
+
+Regards,
+Learn It team

@@ -1,6 +1,10 @@
 import json
-
+from django.core.mail import send_mail
+from django.http import BadHeaderError
 from django.shortcuts import render, redirect
+from django.template import Context
+from django.template.loader import get_template
+
 from .forms import UserForm
 from .models import Subject, List, Question, TestResults
 
@@ -19,6 +23,22 @@ def register(request):
             user = form.save()
             user.username = user.first_name
             user.save()
+
+            template = get_template('emails/registration.txt')
+            content = template.render({'username': user.username})
+            if not user.email:
+                raise BadHeaderError('No email address given for {0}'.format(user))
+
+            send_mail(
+                '[Learn It] Account registration',
+                content,
+                'noreply@learnit.com',
+                [user.email],
+                fail_silently=False,
+            )
+
+            print('Sent mail to: {}'.format(user.email))
+
             return redirect("/")
 
     return render(request, "registration/register.html", {
@@ -27,7 +47,9 @@ def register(request):
 
 
 def app_home(request):
-    return render(request, "app/index.html")
+    return render(request, "app/index.html", {
+        'username': request.user.username
+    })
 
 
 def logged_out(request):
@@ -64,7 +86,7 @@ def add_list(request):
 
         n_list.save()
 
-        return redirect("/lists")
+        return redirect("/app/lists")
 
     subjects = Subject.objects.all()
 
@@ -129,6 +151,22 @@ def register_results(request):
 
 
 def results(request, result_id):
+    if not request.user.is_authenticated:
+        return redirect('/login')
+
     return render(request, 'app/result.html', {
         'result': TestResults.objects.get(pk=result_id)
+    })
+
+
+def profile(request):
+    if not request.user.is_authenticated:
+        return redirect('/login')
+
+    user = request.user
+    n_results = TestResults.objects.filter(user=user)
+
+    return render(request, 'registration/profile.html', {
+        'user': user,
+        'results': n_results
     })
