@@ -108,12 +108,28 @@ def lists(request):
 
 def test(request, list_id):
     try:
-        list = List.objects.get(pk=list_id, owner=request.user)
+        n_list = List.objects.get(pk=list_id, owner=request.user)
     except:
         return redirect('/app/lists')
 
+    if request.method != 'POST':
+        return render(request, 'app/test_setup.html', {
+            'list': n_list
+        })
+
+    settings = {
+        'question_subject': request.POST["question_subject"],
+        'mode': request.POST["test_mode"],
+        'delay': float(request.POST["delay"])*1000
+    }
+
+    print(settings)
+    print(json.dumps(settings))
+
     return render(request, 'app/test.html', {
-        'questions': list.questions.all()
+        'questions': n_list.questions.all(),
+        'list': n_list,
+        'settings': json.dumps(settings)
     })
 
 
@@ -143,7 +159,7 @@ def register_results(request):
     diff_quest = json.loads(request.POST["difficult_words"])
 
     for question in diff_quest:
-        result.difficult_questions.add(Question.objects.get(question=question["question"], answer=question["answer"]))
+        result.difficult_questions.add(Question.objects.filter(question=question["question"], answer=question["answer"])[0])
 
     result.save()
 

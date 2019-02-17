@@ -48,7 +48,7 @@ nav {
     padding: 15px;
 }
 
-input[type=text], input[type=password], input[type=email], select {
+input[type=text], input[type=password], input[type=email], input[type=number], select {
   width: 100%;
   padding: 12px 20px;
   margin: 8px 0;
@@ -150,4 +150,12 @@ h2{
 
 #question_result, #wrong_answer{
     display: none;
+}
+
+#test_form{
+    width: 50%;
+}
+
+#delay_input{
+    width: 60%;
 }

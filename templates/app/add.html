@@ -43,33 +43,30 @@
                 <input type="text" id="answer_1" name="answer_1">
             </td>
         </tr>
-        <tr>
-        <td><button id="add_inputs_c" type="button" onclick="add_inputs()">Add Inputs</button></td>
-<td><button  id="remove_inputs_c" type="button" onclick="remove_inputs()">Remove Inputs</button></td>
-</tr>
     </table>
+    <button id="add_inputs_c" type="button" onclick="add_inputs()">Add Inputs</button>
+    <button  id="remove_inputs_c" type="button" onclick="remove_inputs()">Remove Inputs</button>
     <br>
     <input type="submit" value="Save" name="submit">
 </form>
 
 <script>
     let question_index = 2;
+    let n_values = {};
 function add_inputs() {
-  let values = {};
+
   for (let i=1; i<question_index; i++){
-      values.i = {
+      n_values[i] = {
           question: document.getElementById("question_" + i).value,
           answer: document.getElementById("answer_" + i).value
       };
-      i++;
   }
   document.getElementById('questions').innerHTML += '<br id="br_q_' + question_index +'"> <input type="text" id="question_' + question_index + '" name="question_' + question_index + '">';
   document.getElementById('answers').innerHTML += '<br id="br_a_' + question_index +'"> <input type="text" id="answer_' + question_index + '" name="answer_' + question_index + '">';
 
   for (let i=1; i<question_index; i++){
-      document.getElementById("question_" + i).value = values.i.question;
-      document.getElementById("answer_" + i).value = values.i.answer;
-      i++;
+      document.getElementById("question_" + i).value = n_values[i].question;
+      document.getElementById("answer_" + i).value = n_values[i].answer;
   }
 
  question_index++;

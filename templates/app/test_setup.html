@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <h2>Testing list: {{ list.name }}</h2>
+    <form method="post" action="">
+    {% csrf_token %}
+    <table id="test_form">
+        <tr>
+            <td>Question subject:</td>
+            <td>
+                <input type="radio" name="question_subject" value="question" checked>{{ list.question_subject }} <br>
+                <input type="radio" name="question_subject" value="answer">{{ list.answer_subject }}
+            </td>
+        </tr>
+        <tr>
+            <td>Test mode:</td>
+            <td>
+                <input type="radio" name="test_mode" value="translate" checked>Translate <br>
+            </td>
+        </tr>
+        <tr>
+            <td>Delay between words:</td>
+            <td>
+                <input id="delay_input" type="number" name="delay" value="1.5"> seconds
+            </td>
+        </tr>
+    </table>
+    <input type="submit" value="Start">
+    </form>
+
+{% endblock %}

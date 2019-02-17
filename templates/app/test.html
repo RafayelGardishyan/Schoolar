@@ -4,7 +4,7 @@
 
 {% block content %}
 
-    <h2>Test</h2>
+    <h2>Test: {{ list.name }}</h2>
     <br>
     <h5>Question:</h5>
     <h1><span id="question"></span></h1>
@@ -24,6 +24,8 @@
     ]
 
     let csrf_token = '{{ csrf_token }}';
+
+    let settings = {{ settings|safe }};
     </script>
     <script src="{% static "js/test_module.js" %}"></script>
 {% endblock %}
