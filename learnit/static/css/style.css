@@ -54,7 +54,7 @@ input[type=text], input[type=password], input[type=email], select {
   margin: 8px 0;
   display: inline-block;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  /*border-radius: 4px;*/
   box-sizing: border-box;
   width: 100%;
 }
@@ -134,4 +134,20 @@ td{
 
 h2{
     font-weight: bold;
+}
+
+#add_inputs_c{
+    background-color: #007410;
+}
+
+#remove_inputs_c{
+    background-color: #7b0100;
+}
+
+#remove_inputs_c,#add_inputs_c{
+    font-weight: bolder;
+}
+
+#question_result, #wrong_answer{
+    display: none;
 }

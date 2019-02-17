@@ -1,3 +1,6 @@
+    let good_color = "#009100";
+    let bad_color = "#b30008";
+
     let stats = {
         wrongAnswers: 0,
         goodAnswers: 0,
@@ -9,6 +12,7 @@
     }
 
     let current_question = undefined;
+    let previous_question = undefined;
 
       difficult_questions = [];
 
@@ -37,16 +41,19 @@
     }
 
     function getWord() {
-       let word = questions.splice(Math.floor(Math.random()*questions.length), 1)[0];
-      if (word == undefined){
-        post("/app/test/register/", {
-            'average_score': stats.averageScore,
-            'difficult_words': JSON.stringify(difficult_questions),
-            'csrfmiddlewaretoken': csrf_token
-        });
-      }else {
+        let word = questions.splice(Math.floor(Math.random()*questions.length), 1)[0];
+        if (word == previous_question && questions.length != 1){
+            return getWord();
+        }
+        if (word == undefined){
+            post("/app/test/register/", {
+                'average_score': stats.averageScore,
+                'difficult_words': JSON.stringify(difficult_questions),
+                'csrfmiddlewaretoken': csrf_token
+            });
+        }else {
           return word;
-      }
+        }
       }
 
     function setWord(word) {
@@ -64,6 +71,7 @@
     function wrongAnswer(question){
         if (!include(difficult_questions, question)){
             difficult_questions.push(question);
+            difficult_questions.push(question);
         }
         questions.push(question);
     }
@@ -72,15 +80,28 @@
         let answer = document.getElementById("input_box").value;
         if (answer == current_question.answer){
             stats.goodAnswers++;
-            document.getElementById("answer_indicator").innerText = "Good!";
+            document.getElementById("answer_indicator").innerText = "Good";
+            document.getElementById("answer_indicator").style.color = good_color;
+            document.getElementById("question").style.color = good_color;
         } else {
             stats.wrongAnswers++;
             wrongAnswer(current_question);
-            document.getElementById("answer_indicator").innerHTML = "Wrong. <br> Correct answer: " + current_question.answer;
+            document.getElementById("answer_indicator").innerHTML = "Wrong";
+            document.getElementById("answer_indicator").style.color = bad_color;
+            document.getElementById("question").style.color = bad_color;
+            document.getElementById("correct_answer").innerText = current_question.answer;
+            document.getElementById("wrong_answer").style.display = 'block';
         }
-        getAverageScore();
-        current_question = getWord();
-        setWord(current_question);
+        document.getElementById("question_result").style.display = 'block';
+        setTimeout(function () {
+            document.getElementById("question_result").style.display = 'none';
+            document.getElementById("wrong_answer").style.display = 'none';
+            document.getElementById("question").style.color = '#000000';
+            getAverageScore();
+            previous_question = current_question;
+            current_question = getWord();
+            setWord(current_question);
+        }, 2000);
     }
 
     document.getElementById("input_box").addEventListener("keydown", function(e) {

@@ -16,8 +16,8 @@
     </td>
     </tr>
     <tr>
-    <td>Question Subject</td>
-    <td>Answer Subject</td>
+    <td>Question</td>
+    <td>Answer</td>
 </tr>
         <tr>
             <td>
@@ -43,11 +43,13 @@
                 <input type="text" id="answer_1" name="answer_1">
             </td>
         </tr>
+        <tr>
+        <td><button id="add_inputs_c" type="button" onclick="add_inputs()">Add Inputs</button></td>
+<td><button  id="remove_inputs_c" type="button" onclick="remove_inputs()">Remove Inputs</button></td>
+</tr>
     </table>
-    <button type="button" onclick="add_inputs()">+</button>
-    <button type="button" onclick="remove_inputs()">-</button>
     <br>
-    <input type="submit" value="Submit" name="submit">
+    <input type="submit" value="Save" name="submit">
 </form>
 
 <script>
