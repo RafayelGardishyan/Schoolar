@@ -42,7 +42,7 @@ def register(request):
             print('Sent mail to: {}'.format(user.email))
 
             # return redirect("/login")
-            
+
             return render(request, 'registration/success.html', {'user': user})
 
     return render(request, "registration/register.html", {
