@@ -2,7 +2,7 @@
 
 {% block content %}
 
-    <h2>Testing list: {{ list.name }}</h2>
+    <h2>Test setup: {{ list.name }}</h2>
     <form method="post" action="">
     {% csrf_token %}
     <table id="test_form">
@@ -17,6 +17,7 @@
             <td>Test mode:</td>
             <td>
                 <input type="radio" name="test_mode" value="translate" checked>Translate <br>
+                <input type="radio" name="test_mode" value="flashcards" checked>Flashcards
             </td>
         </tr>
         <tr>

@@ -4,14 +4,29 @@
 
 {% block content %}
 
-    <h2>Test: {{ list.name }}</h2>
+    <h2>{{ list.name }}</h2>
     <br>
     <h5>Question:</h5>
     <h1><span id="question"></span></h1>
     <h4 id="question_result"><span id="answer_indicator"></span></h4>
-    <h2 id="wrong_answer">Correct answer: <i><span id="correct_answer"></span></i></h2>
-    <input id="input_box" type="text" placeholder="Input text here" size="50"><br>
-    <button onclick="check()">Enter</button>
+    <div id="translate_mode">
+        <h2 id="wrong_answer">Correct answer: <i><span id="correct_answer"></span></i></h2>
+        <input id="input_box" type="text" placeholder="Input text here" size="50"><br>
+        <button onclick="check()">Enter</button>
+    </div>
+    <div id="flashcard_mode">
+        <h1><span id="correct_answer_fc"></span></h1>
+        <button id="flip_button" onclick="flip()" >Flip</button>
+        <div id="choose_menu">
+            <table>
+                <tr>
+                    <th><button id="good_button" onclick="good()">Correct</button></th>
+                    <th><button id="half_good_button" onclick="half_good()">Almost correct</button></th>
+                    <th><button id="wrong_button" onclick="wrong()">Wrong</button></th>
+                </tr>
+            </table>
+        </div>
+    </div>
     <script>
     questions = [
       {% for question in questions %}

@@ -159,3 +159,29 @@ h2{
 #delay_input{
     width: 60%;
 }
+
+#good_button{
+    background-color: #007410;
+}
+
+#half_good_button{
+    background-color: #be9914;
+}
+
+#wrong_button{
+    background-color: #7b0100;
+}
+
+#good_button, #wrong_button, #half_good_button{
+    height: 100px;
+    font-weight: bold;
+    letter-spacing: 3px;
+}
+
+#correct_answer_fc, #choose_menu{
+    display: none;
+}
+
+#correct_answer_fc{
+    font-size: 75px;
+}

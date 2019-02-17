@@ -1,5 +1,6 @@
-    let good_color = "#009100";
-    let bad_color = "#b30008";
+    let good_color = "#007410";
+    let bad_color = "#7b0100";
+    let half_color = "#be9914";
 
     let delay = settings.delay;
 
@@ -60,7 +61,7 @@
       }
 
     function setWord(word) {
-        if (settings.mode === "question") {
+        if (settings.question_subject === "question") {
             document.getElementById("question").innerText = word.question;
         } else {
             document.getElementById("question").innerText = word.answer;
@@ -93,7 +94,7 @@
         let answer = document.getElementById("input_box").value;
         if (answer == good_answer){
             stats.goodAnswers++;
-            document.getElementById("answer_indicator").innerText = "Good";
+            document.getElementById("answer_indicator").innerText = "Correct";
             document.getElementById("answer_indicator").style.color = good_color;
             document.getElementById("question").style.color = good_color;
         } else {
@@ -123,5 +124,67 @@
       }
     });
 
+    function flip(){
+        let good_answer;
+        if (settings.question_subject === "question") {
+            good_answer = current_question.answer;
+        } else {
+            good_answer = current_question.question;
+        }
+        document.getElementById('correct_answer_fc').innerText = good_answer;
+        document.getElementById('correct_answer_fc').style.display = 'block';
+        document.getElementById('flip_button').style.display = 'none';
+        document.getElementById('choose_menu').style.display = 'block';
+    }
+
+    function reset_flip(){
+        document.getElementById("question_result").style.display = 'block';
+        setTimeout(function () {
+            document.getElementById("question_result").style.display = 'none';
+            document.getElementById('flip_button').style.display = 'block';
+            document.getElementById('choose_menu').style.display = 'none';
+            document.getElementById('correct_answer_fc').style.display = 'none';
+            document.getElementById("question").style.color = '#000000';
+            getAverageScore();
+            previous_question = current_question;
+            current_question = getWord();
+            setWord(current_question);
+        }, delay);
+    }
+
+    function good(){
+        stats.goodAnswers++;
+        document.getElementById("answer_indicator").innerText = "Correct";
+        document.getElementById("answer_indicator").style.color = good_color;
+        document.getElementById("question").style.color = good_color;
+        reset_flip();
+    }
+
+    function wrong(){
+        stats.wrongAnswers++;
+        wrongAnswer(current_question);
+        document.getElementById("answer_indicator").innerText = "Wrong";
+        document.getElementById("answer_indicator").style.color = bad_color;
+        document.getElementById("question").style.color = bad_color;
+        reset_flip();
+    }
+
+    function half_good(){
+        stats.goodAnswers++;
+        stats.wrongAnswers++;
+        wrongAnswer(current_question);
+        document.getElementById("answer_indicator").innerText = "Almost correct";
+        document.getElementById("answer_indicator").style.color = half_color;
+        document.getElementById("question").style.color = half_color;
+        reset_flip();
+    }
+
     current_question = getWord();
     setWord(current_question);
+
+
+    if (settings.mode === 'flashcards'){
+        document.getElementById('translate_mode').style.display = 'none';
+    } else if (settings.mode === 'translate'){
+        document.getElementById('flashcard_mode').style.display = 'none';
+    }
