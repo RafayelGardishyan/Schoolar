@@ -2,7 +2,6 @@ import json
 from django.core.mail import send_mail
 from django.http import BadHeaderError
 from django.shortcuts import render, redirect
-from django.template import Context
 from django.template.loader import get_template
 
 from .forms import UserForm
@@ -40,6 +39,7 @@ def register(request):
             print('Sent mail to: {}'.format(user.email))
 
             return redirect("/")
+            # return render(request, 'registration/success.html', {'user': user})
 
     return render(request, "registration/register.html", {
         'userform': UserForm()

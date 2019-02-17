@@ -3,10 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="37226b22-8a6d-464d-b72d-9637e4ca13fb" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learnit/static/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/learnit/static/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learnit/static/js/test_module.js" beforeDir="false" afterPath="$PROJECT_DIR$/learnit/static/js/test_module.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/app/add.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/app/add.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/app/test.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/app/test.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/learnit/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/learnit/views.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -127,7 +124,7 @@
           <entry key="learnit_list" value="2" />
           <entry key="learnit_list_questions" value="2" />
           <entry key="learnit_question" value="2" />
-          <entry key="py" value="18" />
+          <entry key="py" value="19" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
@@ -135,7 +132,7 @@
           <entry key="CSS" value="3" />
           <entry key="Database Element" value="6" />
           <entry key="JavaScript" value="3" />
-          <entry key="Python" value="18" />
+          <entry key="Python" value="19" />
           <entry key="Svelte" value="30" />
         </counts>
       </usages-collector>
@@ -145,7 +142,7 @@
           <entry key="css" value="555" />
           <entry key="html" value="5160" />
           <entry key="js" value="360" />
-          <entry key="py" value="4680" />
+          <entry key="py" value="4790" />
           <entry key="txt" value="69" />
         </counts>
       </usages-collector>
@@ -154,7 +151,7 @@
           <entry key="CSS" value="555" />
           <entry key="JavaScript" value="360" />
           <entry key="PLAIN_TEXT" value="69" />
-          <entry key="Python" value="4680" />
+          <entry key="Python" value="4790" />
           <entry key="Scratch" value="2" />
           <entry key="Svelte" value="5160" />
         </counts>
@@ -190,11 +187,20 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/app/applets/result_graph.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="289">
               <caret line="17" column="29" selection-start-line="17" selection-start-column="29" selection-end-line="17" selection-end-column="29" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/learnit/views.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="68">
+              <caret line="4" selection-start-line="4" selection-end-line="4" />
             </state>
           </provider>
         </entry>
@@ -242,7 +248,6 @@
         <option value="$PROJECT_DIR$/templates/app/applets.html" />
         <option value="$PROJECT_DIR$/learnit/models.py" />
         <option value="$PROJECT_DIR$/templates/app/result.html" />
-        <option value="$PROJECT_DIR$/learnit/views.py" />
         <option value="$PROJECT_DIR$/templates/index.html" />
         <option value="$PROJECT_DIR$/templates/base.html" />
         <option value="$PROJECT_DIR$/templates/app/lists.html" />
@@ -253,6 +258,7 @@
         <option value="$PROJECT_DIR$/templates/app/test.html" />
         <option value="$PROJECT_DIR$/learnit/static/js/test_module.js" />
         <option value="$PROJECT_DIR$/templates/app/applets/result_graph.html" />
+        <option value="$PROJECT_DIR$/learnit/views.py" />
       </list>
     </option>
   </component>
@@ -521,15 +527,8 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="306">
           <caret line="25" column="33" selection-start-line="25" selection-start-column="8" selection-end-line="25" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learnit/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="88" column="30" selection-start-line="88" selection-start-column="30" selection-end-line="88" selection-end-column="30" />
           <folding>
-            <element signature="e#0#11#0" expanded="true" />
+            <marker date="1550403469833" expanded="true" signature="432:742" ph="..." />
           </folding>
         </state>
       </provider>
@@ -608,6 +607,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="289">
           <caret line="17" column="29" selection-start-line="17" selection-start-column="29" selection-end-line="17" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learnit/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" selection-start-line="4" selection-end-line="4" />
         </state>
       </provider>
     </entry>
