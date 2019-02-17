@@ -2,9 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="37226b22-8a6d-464d-b72d-9637e4ca13fb" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/templates/registration/success.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/learnit/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/learnit/forms.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/learnit/static/js/test_module.js" beforeDir="false" afterPath="$PROJECT_DIR$/learnit/static/js/test_module.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/learnit/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/learnit/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/app/test_setup.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/app/test_setup.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -120,12 +123,12 @@
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="css" value="3" />
-          <entry key="html" value="35" />
+          <entry key="html" value="37" />
           <entry key="js" value="3" />
           <entry key="learnit_list" value="2" />
           <entry key="learnit_list_questions" value="2" />
           <entry key="learnit_question" value="2" />
-          <entry key="py" value="21" />
+          <entry key="py" value="23" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
@@ -133,28 +136,28 @@
           <entry key="CSS" value="3" />
           <entry key="Database Element" value="6" />
           <entry key="JavaScript" value="3" />
-          <entry key="Python" value="21" />
-          <entry key="Svelte" value="35" />
+          <entry key="Python" value="23" />
+          <entry key="Svelte" value="37" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="cell" value="2" />
           <entry key="css" value="751" />
-          <entry key="html" value="6585" />
-          <entry key="js" value="1533" />
-          <entry key="py" value="5405" />
+          <entry key="html" value="7035" />
+          <entry key="js" value="1536" />
+          <entry key="py" value="5570" />
           <entry key="txt" value="69" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="CSS" value="751" />
-          <entry key="JavaScript" value="1533" />
+          <entry key="JavaScript" value="1536" />
           <entry key="PLAIN_TEXT" value="69" />
-          <entry key="Python" value="5405" />
+          <entry key="Python" value="5570" />
           <entry key="Scratch" value="2" />
-          <entry key="Svelte" value="6585" />
+          <entry key="Svelte" value="7035" />
         </counts>
       </usages-collector>
     </session>
@@ -179,11 +182,23 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/learnit/static/js/test_module.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="340">
-              <caret line="128" column="26" selection-start-line="128" selection-start-column="26" selection-end-line="128" selection-end-column="26" />
+            <state relative-caret-position="170">
+              <caret line="58" column="8" selection-start-line="58" selection-start-column="11" selection-end-line="61" selection-end-column="12" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/learnit/models.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="306">
+              <caret line="25" column="33" selection-start-line="25" selection-start-column="8" selection-end-line="25" selection-end-column="33" />
+              <folding>
+                <marker date="1550403469833" expanded="true" signature="432:742" ph="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -191,10 +206,36 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/learnit/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="181">
-              <caret line="123" column="54" selection-start-line="123" selection-start-column="54" selection-end-line="123" selection-end-column="54" />
+            <state relative-caret-position="476">
+              <caret line="43" lean-forward="true" selection-start-line="43" selection-end-line="43" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/templates/registration/success.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="102">
+              <caret line="6" column="5" selection-start-line="6" selection-start-column="5" selection-end-line="6" selection-end-column="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/registration/register.html">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/learnit/forms.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="340">
+              <caret line="20" column="18" lean-forward="true" selection-start-line="20" selection-start-column="18" selection-end-line="20" selection-end-column="18" />
+              <folding>
+                <element signature="e#0#13#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -237,7 +278,6 @@
         <option value="$PROJECT_DIR$/LearnITProject/settings.py" />
         <option value="$PROJECT_DIR$/LearnITProject/urls.py" />
         <option value="$PROJECT_DIR$/templates/register.html" />
-        <option value="$PROJECT_DIR$/learnit/forms.py" />
         <option value="$PROJECT_DIR$/templates/registration/login.html" />
         <option value="$PROJECT_DIR$/templates/registration/register.html" />
         <option value="$PROJECT_DIR$/templates/registration/logout.html" />
@@ -262,9 +302,11 @@
         <option value="$PROJECT_DIR$/templates/registration/edit_profile.html" />
         <option value="$PROJECT_DIR$/templates/app/test.html" />
         <option value="$PROJECT_DIR$/learnit/static/css/style.css" />
-        <option value="$PROJECT_DIR$/learnit/views.py" />
         <option value="$PROJECT_DIR$/templates/app/test_setup.html" />
         <option value="$PROJECT_DIR$/learnit/static/js/test_module.js" />
+        <option value="$PROJECT_DIR$/learnit/forms.py" />
+        <option value="$PROJECT_DIR$/learnit/views.py" />
+        <option value="$PROJECT_DIR$/templates/registration/success.html" />
       </list>
     </option>
   </component>
@@ -463,7 +505,6 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/templates/base" />
     <entry file="file://$PROJECT_DIR$/templates/registration/login.html" />
-    <entry file="file://$PROJECT_DIR$/templates/registration/register.html" />
     <entry file="file://$PROJECT_DIR$/learnit/admin.py" />
     <entry file="das://7d9b2254-edf4-45d8-b834-53dd732a73ef/schema/main/table/learnit_list">
       <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
@@ -512,23 +553,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="353">
           <caret line="355" column="6" selection-start-line="355" selection-start-column="6" selection-end-line="355" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learnit/forms.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="40" lean-forward="true" selection-start-line="1" selection-start-column="40" selection-end-line="1" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learnit/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="25" column="33" selection-start-line="25" selection-start-column="8" selection-end-line="25" selection-end-column="33" />
-          <folding>
-            <marker date="1550403469833" expanded="true" signature="432:742" ph="..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -622,16 +646,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/learnit/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="181">
-          <caret line="123" column="54" selection-start-line="123" selection-start-column="54" selection-end-line="123" selection-end-column="54" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/app/test_setup.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="340">
@@ -641,8 +655,48 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/learnit/static/js/test_module.js">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="58" column="8" selection-start-line="58" selection-start-column="11" selection-end-line="61" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/registration/register.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learnit/forms.py">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="340">
-          <caret line="128" column="26" selection-start-line="128" selection-start-column="26" selection-end-line="128" selection-end-column="26" />
+          <caret line="20" column="18" lean-forward="true" selection-start-line="20" selection-start-column="18" selection-end-line="20" selection-end-column="18" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learnit/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="25" column="33" selection-start-line="25" selection-start-column="8" selection-end-line="25" selection-end-column="33" />
+          <folding>
+            <marker date="1550403469833" expanded="true" signature="432:742" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learnit/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="476">
+          <caret line="43" lean-forward="true" selection-start-line="43" selection-end-line="43" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/registration/success.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="5" selection-start-line="6" selection-start-column="5" selection-end-line="6" selection-end-column="5" />
         </state>
       </provider>
     </entry>

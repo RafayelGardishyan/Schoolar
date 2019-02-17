@@ -1,4 +1,7 @@
 import json
+import random
+import string
+
 from django.core.mail import send_mail
 from django.http import BadHeaderError
 from django.shortcuts import render, redirect
@@ -15,13 +18,13 @@ def index(request):
 
 
 def register(request):
+    if request.user.is_authenticated:
+        return redirect('/app/home')
     if request.method == 'POST':
         form = UserForm(request.POST)
 
         if form.is_valid():
             user = form.save()
-            user.username = user.first_name
-            user.save()
 
             template = get_template('emails/registration.txt')
             content = template.render({'username': user.username})
@@ -38,8 +41,9 @@ def register(request):
 
             print('Sent mail to: {}'.format(user.email))
 
-            return redirect("/login")
-            # return render(request, 'registration/success.html', {'user': user})
+            # return redirect("/login")
+            
+            return render(request, 'registration/success.html', {'user': user})
 
     return render(request, "registration/register.html", {
         'userform': UserForm()
@@ -75,8 +79,9 @@ def add_list(request):
             try:
                 question.question = request.POST["question_" + str(n_index)]
                 question.answer = request.POST["answer_" + str(n_index)]
-                question.save()
-                questions.append(question)
+                if question.answer != "" and question.question != "":
+                    question.save()
+                    questions.append(question)
                 n_index += 1
             except KeyError:
                 go = False

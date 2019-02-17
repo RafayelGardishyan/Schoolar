@@ -33,10 +33,8 @@
       difficult_questions = [];
 
     function post(path, params) {
-    let method = "post"; // Set method to post by default if not specified.
+    let method = "post";
 
-    // The rest of this code assumes you are not using a library.
-    // It can be made less wordy if you use one.
     let form = document.createElement("form");
     form.setAttribute("method", method);
     form.setAttribute("action", path);
@@ -58,10 +56,10 @@
 
     function getWord() {
         let word = questions.splice(Math.floor(Math.random()*questions.length), 1)[0];
-        if (word == previous_question && questions.length != 1){
-            questions.push(word);
-            return getWord();
-        }
+        // if (word == previous_question && questions.length != 1){
+        //     questions.push(word);
+        //     return getWord();
+        // }
         if (word == undefined){
             post("/app/test/register/", {
                 'average_score': stats.averageScore,

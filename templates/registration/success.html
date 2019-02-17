@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+  <h2>You are successfully registered</h2>
+  <h3>Hi {{ user.first_name }},</h3>
+  <p>
+  You are successfully registered on Learn It. Now you can start learning!<br>
+  Your username is {{ user.username }}.<br>
+  It's also sent to your E-Mail address ({{ user.email }}). It's now a combination between your first name and some numbers and letters. <br>
+  You can change that on your profile page.
+
+  </p>
+{% endblock %}
