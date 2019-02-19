@@ -165,7 +165,13 @@ def register_results(request):
     diff_quest = json.loads(request.POST["difficult_words"])
 
     for question in diff_quest:
-        result.difficult_questions.add(Question.objects.filter(question=question["question"], answer=question["answer"])[0])
+        try:
+            result.difficult_questions.add(
+                Question.objects.get(question=question["question"], answer=question["answer"]))
+        except:
+            result.difficult_questions.add(
+                Question.objects.filter(question=question["question"], answer=question["answer"])[0])
+
 
     result.save()
 
