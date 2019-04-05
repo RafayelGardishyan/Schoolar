@@ -10,6 +10,8 @@ pool:
   vmImage: 'Ubuntu-16.04'
 strategy:
   matrix:
+    Python35:
+      PYTHON_VERSION: '3.5'
     Python36:
       PYTHON_VERSION: '3.6'
     Python37:
