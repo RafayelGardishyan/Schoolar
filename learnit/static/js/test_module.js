@@ -213,7 +213,7 @@
     }
     
     function update_progress_bar(){
-    	let progress = stats.goodAnswers + stats.wrongAnswers;
+    	let progress = stats.goodAnswers;
     	let total = progress + questions.length;
     	document.getElementById("progressBar").value = parseFloat(progress / total * 100);
     }
