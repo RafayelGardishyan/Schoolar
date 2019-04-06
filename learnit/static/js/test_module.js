@@ -55,6 +55,7 @@
     }
 
     function getWord() {
+    	update_progress_bar()
         let word = questions.splice(Math.floor(Math.random()*questions.length), 1)[0];
         // if (word == previous_question && questions.length != 1){
         //     questions.push(word);
@@ -204,14 +205,19 @@
     }
 
     function half_good(){
-        stats.goodAnswers++;
-        stats.wrongAnswers++;
         wrongAnswer(current_question);
         document.getElementById("answer_indicator").innerText = "Almost correct";
         document.getElementById("answer_indicator").style.color = half_color;
         document.getElementById("question").style.color = half_color;
         reset_flip();
     }
+    
+    function update_progress_bar(){
+    	let progress = stats.goodAnswers + stats.wrongAnswers;
+    	let total = progress + questions.length;
+    	document.getElementById("progressBar").value = parseFloat(progress / total * 100);
+    }
+    	
 
     current_question = getWord();
     setWord(current_question);
