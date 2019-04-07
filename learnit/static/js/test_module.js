@@ -57,7 +57,7 @@
     function getWord() {
     	update_progress_bar()
         let word = questions.splice(Math.floor(Math.random()*questions.length), 1)[0];
-        // if (word == previous_question && questions.length != 1){
+        // if (word === previous_question && questions.length !=s= 1){
         //     questions.push(word);
         //     return getWord();
         // }
@@ -98,12 +98,16 @@
     return false;
 }
 
-    function wrongAnswer(question){
-        if (!include(difficult_questions, question)){
-            difficult_questions.push(question);
-            difficult_questions.push(question);
+    function wrongAnswer(questionw){
+        if (!include(difficult_questions, questionw)){
+            difficult_questions.push(questionw);
         }
-        questions.push(question);
+        let temp = JSON.parse(JSON.stringify(questionw));
+
+        questions.push(temp);
+        questions.push(questionw);
+
+        temp = null;
     }
 
     function check(){

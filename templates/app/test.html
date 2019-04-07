@@ -12,7 +12,7 @@
     <div id="translate_mode">
         <h2 id="wrong_answer">Correct answer: <i><span id="correct_answer"></span></i></h2>
         <input id="input_box" type="text" placeholder="Input text here" size="50"><br>
-        <button onclick="check()">Enter</button>
+        <button onclick="check()">Check</button>
     </div>
     <div id="flashcard_mode">
         <h1><span id="correct_answer_fc"></span></h1>
@@ -28,8 +28,8 @@
         </div>
     </div>
     
-    <div>
-    	<meter id="progressBar" min=0 max=100 value=0 />
+    <div id="progress_wrapper">
+    	<progress id="progressBar" min=0 max=100 value=0 />
     </div>
     
     <script>
