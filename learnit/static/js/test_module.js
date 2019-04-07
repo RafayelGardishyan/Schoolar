@@ -219,7 +219,9 @@
     function update_progress_bar(){
     	let progress = stats.goodAnswers;
     	let total = progress + questions.length;
-    	document.getElementById("progressBar").value = parseFloat(progress / total * 100);
+	var percentage = progress / total * 100;
+	document.getElementById("progressBarLabel").innerHTML = Math.round(percentage) + "%";
+	document.getElementById("progressBar").value = percentage;
     }
     	
 

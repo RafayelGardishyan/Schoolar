@@ -215,7 +215,7 @@ progress[value]::-webkit-progress-value {
 }
 
 #progress_wrapper{
-    width: 97.6vw;
+    /*width: 97.6vw;*/
     padding: 10px;
     background-color: #333;
 }
@@ -223,4 +223,14 @@ progress[value]::-webkit-progress-value {
 progress::-webkit-progress-bar {
     width: 96vw;
     /*display: inline;*/
+}
+
+#progressBarLabel {
+	position: absolute;
+	width: 100%;
+	text-align: center;
+}
+
+#progressBar {
+	width: 100%;
 }
