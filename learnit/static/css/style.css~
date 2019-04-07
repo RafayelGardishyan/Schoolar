@@ -185,3 +185,52 @@ h2{
 #correct_answer_fc{
     font-size: 75px;
 }
+
+#progress_text{
+    color: white;
+}
+
+progress[value] {
+  /* Reset the default appearance */
+  -webkit-appearance: none;
+   appearance: none;
+
+  width: 250px;
+  height: 20px;
+}
+
+progress[value]::-webkit-progress-value {
+  background-image:
+	   -webkit-linear-gradient(-45deg,
+	                           transparent 33%, rgba(0, 0, 0, .1) 33%,
+	                           rgba(0,0, 0, .1) 66%, transparent 66%),
+	   -webkit-linear-gradient(top,
+	                           rgba(255, 255, 255, .25),
+	                           rgba(0, 0, 0, .25)),
+	   -webkit-linear-gradient(left, #0acc60, #a6ff28);
+
+    border-radius: 2px;
+    background-size: 35px 20px, 100% 100%, 100% 100%;
+
+}
+
+#progress_wrapper{
+    /*width: 97.6vw;*/
+    padding: 10px;
+    background-color: #333;
+}
+
+progress::-webkit-progress-bar {
+    width: 96vw;
+    /*display: inline;*/
+}
+
+#progressBarLabel {
+	position: absolute;
+	width: 100%;
+	text-align: center;
+}
+
+#progressBar {
+	width: 100%;
+}

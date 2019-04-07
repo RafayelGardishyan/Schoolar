@@ -222,6 +222,7 @@ progress[value]::-webkit-progress-value {
 
 progress::-webkit-progress-bar {
     width: 96vw;
+    background-color: #333;
     /*display: inline;*/
 }
 
