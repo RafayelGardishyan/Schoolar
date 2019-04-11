@@ -15,7 +15,24 @@
         var options = {
           title: 'Your test results',
           curveType: 'function',
-          legend: { position: 'bottom' }
+          legend: {
+              position: 'bottom',
+              textStyle: {
+                  color: "#FFFFFF"
+              }
+          },
+          backgroundColor: {
+              fill: "#333333"
+          },
+          hAxis: {
+              textStyle:{color: '#FFF'}
+          },
+          vAxis: {
+              textStyle:{color: '#FFF'}
+          },
+          titleTextStyle: {
+              color: "FFFFFF"
+          }
         };
 
         var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
