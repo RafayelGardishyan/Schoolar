@@ -4,38 +4,47 @@
 
     <h2>Test setup: {{ list.name }}</h2>
     <form method="post" action="">
-    {% csrf_token %}
-    <table id="test_form">
-        <tr>
-            <td>Question subject:</td>
-            <td>
-                <input type="radio" name="question_subject" value="question" checked="checked">{{ list.question_subject }} <br>
-                <input type="radio" name="question_subject" value="answer">{{ list.answer_subject }}
-            </td>
-        </tr>
-        <tr>
-            <td>Test mode:</td>
-            <td>
-                <input type="radio" name="test_mode" value="translate" checked="checked">Translate <br>
-                <input type="radio" name="test_mode" value="flashcards" >Flashcards <br>
-                <input type="radio" name="test_mode" value="shuffle" >Shuffled
-            </td>
-        </tr>
-        <tr>
-            <td>Case sensitive:</td>
-            <td>
-                <input type="radio" name="case_sensitive" value="yes" checked="checked">Yes
-                <input type="radio" name="case_sensitive" value="no" >No
-            </td>
-        </tr>
-        <tr>
-            <td>Delay between words:</td>
-            <td>
-                <input id="delay_input" type="number" name="delay" value="1.5"> seconds
-            </td>
-        </tr>
-    </table>
-    <input type="submit" value="Start">
+        {% csrf_token %}
+        <table id="test_form">
+            <tr>
+                <td>Question subject:</td>
+                {% if settings_lang == 0 %}
+                    <td>
+                        <input type="radio" name="question_subject" value="question"
+                               checked="checked">{{ list.question_subject }} <br>
+                        <input type="radio" name="question_subject" value="answer">{{ list.answer_subject }}
+                    </td>
+                {% elif settings_lang == 1 %}
+                    <td>
+                        <input type="radio" name="question_subject" value="question"
+                               checked="checked">{{ list.question_subject.name_dutch }} <br>
+                        <input type="radio" name="question_subject" value="answer">{{ list.answer_subject.name_dutch }}
+                    </td>
+                {% endif %}
+            </tr>
+            <tr>
+                <td>Test mode:</td>
+                <td>
+                    <input type="radio" name="test_mode" value="translate" checked="checked">Translate <br>
+                    <input type="radio" name="test_mode" value="flashcards">Flashcards <br>
+                    <input type="radio" name="test_mode" value="shuffle">Shuffled
+                </td>
+            </tr>
+            <tr>
+                <td>Case sensitive:</td>
+                <td>
+                    <input type="radio" name="case_sensitive" value="yes" checked="checked">Yes
+                    <input type="radio" name="case_sensitive" value="no">No
+                </td>
+            </tr>
+            <tr>
+                <td>Delay between words:</td>
+                <td>
+                    <input id="delay_input" type="number" name="delay" value="1.5"> seconds
+                </td>
+            </tr>
+        </table>
+        <input type="submit" value="Start">
     </form>
 
 {% endblock %}
