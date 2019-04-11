@@ -23,14 +23,24 @@
             <td>
                 <select name="question_subject">
                 {% for subject in subjects %}
-                <option value="{{ subject.pk }}">{{ subject.name }}</option>
+                    {% if settings_lang == 0 %}
+                        <option value="{{ subject.pk }}">{{ subject.name }}</option>
+                    {% elif settings_lang == 1 %}
+                        <option value="{{ subject.pk }}">{{ subject.name_dutch }}</option>
+                    {% endif %}
                 {% endfor %}
                 </select>
             </td>
             <td>
                 <select name="answer_subject">
                 {% for subject in subjects %}
-                <option value="{{ subject.pk }}">{{ subject.name }}</option>
+                    <div class="option_add_menu">
+                    {% if settings_lang == 0 %}
+                        <option value="{{ subject.pk }}">{{ subject.name }}</option>
+                    {% elif settings_lang == 1 %}
+                        <option value="{{ subject.pk }}">{{ subject.name_dutch }}</option>
+                    {% endif %}
+                    </div>
                 {% endfor %}
             </select>
             </td>
