@@ -39,3 +39,9 @@ class List(models.Model):
 
     def get_test(self):
         return str(self.pk)
+
+
+class Settings(models.Model):
+    user = models.ForeignKey(to=User, on_delete=models.CASCADE)
+    interface_theme = models.IntegerField(default=0)
+    interface_language = models.IntegerField(default=0)

@@ -1,0 +1,238 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+
+html, body{
+    margin: 0;
+    padding: 0;
+}
+
+*{
+    font-family: 'Montserrat', sans-serif;
+}
+
+nav {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+
+.nav-item {
+    float: left;
+}
+
+.nav-item a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+.nav-item a:hover {
+  background-color: #111;
+}
+
+#title{
+    width: 99,5; 
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    height: 100%;
+    margin: 0;
+    background-color: #333;
+    color: #fff;
+}
+
+.content{
+    padding: 15px;
+}
+
+input[type=text], input[type=password], input[type=email], input[type=number], select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  /*border-radius: 4px;*/
+  box-sizing: border-box;
+  width: 100%;
+}
+
+input[type=submit], button {
+  width: 100%;
+  background-color: #333;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  /*border-radius: 4px;*/
+  cursor: pointer;
+}
+
+input[type=submit]:hover, button:hover {
+  background-color: #111;
+}
+
+table{
+    width: 100%;
+    vertical-align: top;
+    text-align: left;
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+td{
+    width: auto;
+}
+
+.delete_list{
+    color: red;
+}
+
+.test_list{
+    color: #2b39ff;
+}
+
+.delete_list:hover{
+    color: #b20000;
+}
+
+.test_list:hover{
+    color: #0814ff;
+}
+
+.test_list, .delete_list{
+    font-size: 30px;
+}
+
+#table_header{
+    background-color: #333;
+    color: white;
+    width: 100%;
+    margin: 0;
+    font-weight: bold;
+}
+
+td{
+    margin: 0;
+    padding: 10px;
+}
+
+.link_button:link, .link_button:visited {
+  background-color: #333;
+  color: white;
+  padding: 14px 25px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.link_button:hover, .link_button:active {
+  background-color: #111;
+}
+
+h2{
+    font-weight: bold;
+}
+
+#add_inputs_c{
+    background-color: #007410;
+}
+
+#remove_inputs_c{
+    background-color: #7b0100;
+}
+
+#remove_inputs_c,#add_inputs_c{
+    font-weight: bolder;
+}
+
+#question_result, #wrong_answer{
+    display: none;
+}
+
+#test_form{
+    width: 50%;
+}
+
+#delay_input{
+    width: 60%;
+}
+
+#good_button{
+    background-color: #007410;
+}
+
+#half_good_button{
+    background-color: #be9914;
+}
+
+#wrong_button{
+    background-color: #7b0100;
+}
+
+#good_button, #wrong_button, #half_good_button{
+    height: 100px;
+    font-weight: bold;
+    letter-spacing: 3px;
+}
+
+#correct_answer_fc, #choose_menu{
+    display: none;
+}
+
+#correct_answer_fc{
+    font-size: 75px;
+}
+
+#progress_text{
+    color: white;
+}
+
+progress[value] {
+  /* Reset the default appearance */
+  -webkit-appearance: none;
+   appearance: none;
+
+  width: 250px;
+  height: 20px;
+}
+
+progress[value]::-webkit-progress-value {
+  background-image:
+	   -webkit-linear-gradient(-45deg,
+	                           transparent 33%, rgba(0, 0, 0, .1) 33%,
+	                           rgba(0,0, 0, .1) 66%, transparent 66%),
+	   -webkit-linear-gradient(top,
+	                           rgba(255, 255, 255, .25),
+	                           rgba(0, 0, 0, .25)),
+	   -webkit-linear-gradient(left, #0acc60, #a6ff28);
+
+    border-radius: 2px;
+    background-size: 35px 20px, 100% 100%, 100% 100%;
+
+}
+
+#progress_wrapper{
+    /*width: 97.6vw;*/
+    padding: 10px;
+    background-color: #333;
+}
+
+progress::-webkit-progress-bar {
+    width: 96vw;
+    background-color: #333;
+    /*display: inline;*/
+}
+
+#progressBarLabel {
+	position: absolute;
+	width: 100%;
+	text-align: center;
+	color: white;
+}
+
+#progressBar {
+	width: 100%;
+}

@@ -149,7 +149,7 @@
         setTimeout(function () {
             document.getElementById("question_result").style.display = 'none';
             document.getElementById("wrong_answer").style.display = 'none';
-            document.getElementById("question").style.color = '#000000';
+            document.getElementById("question").style.color = text_color;
             getAverageScore();
             previous_question = current_question;
             current_question = getWord();
@@ -183,7 +183,7 @@
             document.getElementById('flip_button').style.display = 'block';
             document.getElementById('choose_menu').style.display = 'none';
             document.getElementById('correct_answer_fc').style.display = 'none';
-            document.getElementById("question").style.color = '#000000';
+            document.getElementById("question").style.color = text_color;
             getAverageScore();
             previous_question = current_question;
             current_question = getWord();

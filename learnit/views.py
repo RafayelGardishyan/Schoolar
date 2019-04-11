@@ -8,7 +8,15 @@ from django.shortcuts import render, redirect
 from django.template.loader import get_template
 
 from .forms import UserForm
-from .models import Subject, List, Question, TestResults
+from .models import Subject, List, Question, TestResults, Settings
+
+
+def generate_context(request, context):
+    if request.user.is_authenticated:
+        settings = Settings.objects.get(user=request.user)
+        context['settings_theme'] = settings.interface_theme
+        context['settings_lang'] = settings.interface_language
+    return context
 
 
 def index(request):
@@ -25,6 +33,10 @@ def register(request):
 
         if form.is_valid():
             user = form.save()
+
+            settings = Settings()
+            settings.user = user
+            settings.save()
 
             template = get_template('emails/registration.txt')
             content = template.render({'username': user.username})
@@ -43,17 +55,17 @@ def register(request):
 
             # return redirect("/login")
 
-            return render(request, 'registration/success.html', {'user': user})
+            return render(request, 'registration/success.html', generate_context(request, {'user': user}))
 
-    return render(request, "registration/register.html", {
+    return render(request, "registration/register.html", generate_context(request, {
         'userform': UserForm()
-    })
+    }))
 
 
 def app_home(request):
-    return render(request, "app/index.html", {
+    return render(request, "app/index.html", generate_context(request, {
         'username': request.user.username
-    })
+    }))
 
 
 def logged_out(request):
@@ -95,9 +107,9 @@ def add_list(request):
 
     subjects = Subject.objects.all()
 
-    return render(request, 'app/add.html', {
+    return render(request, 'app/add.html', generate_context(request, {
         'subjects': subjects
-    })
+    }))
 
 
 def lists(request):
@@ -105,10 +117,10 @@ def lists(request):
         return redirect('/login')
 
     n_lists = List.objects.filter(owner=request.user)
-    return render(request, 'app/lists.html', {
+    return render(request, 'app/lists.html', generate_context(request, {
         'lists': n_lists,
         'username': request.user.username
-    })
+    }))
 
 
 def test(request, list_id):
@@ -118,9 +130,9 @@ def test(request, list_id):
         return redirect('/app/lists')
 
     if request.method != 'POST':
-        return render(request, 'app/test_setup.html', {
+        return render(request, 'app/test_setup.html', generate_context(request, {
             'list': n_list
-        })
+        }))
 
     settings = {
         'question_subject': request.POST["question_subject"],
@@ -129,14 +141,14 @@ def test(request, list_id):
         'case_sensitive': request.POST['case_sensitive']
     }
 
-    print(settings)
-    print(json.dumps(settings))
+    # print(settings)
+    # print(json.dumps(settings))
 
-    return render(request, 'app/test.html', {
+    return render(request, 'app/test.html', generate_context(request, {
         'questions': n_list.questions.all(),
         'list': n_list,
         'settings': json.dumps(settings)
-    })
+    }))
 
 
 def delete(request, list_id):
@@ -182,9 +194,9 @@ def results(request, result_id):
     if not request.user.is_authenticated:
         return redirect('/login')
 
-    return render(request, 'app/result.html', {
+    return render(request, 'app/result.html', generate_context(request, {
         'result': TestResults.objects.get(pk=result_id)
-    })
+    }))
 
 
 def profile(request):
@@ -194,10 +206,10 @@ def profile(request):
     user = request.user
     n_results = TestResults.objects.filter(user=user)
 
-    return render(request, 'registration/profile.html', {
+    return render(request, 'registration/profile.html', generate_context(request, {
         'user': user,
         'results': n_results
-    })
+    }))
 
 
 def edit_profile(request):
@@ -212,6 +224,11 @@ def edit_profile(request):
         user.email = request.POST["email"]
         user.save()
 
+        settings = Settings.objects.get(user=user)
+        settings.interface_theme = int(request.POST["theme"])
+        settings.interface_language = int(request.POST["lang"])
+        settings.save()
+
         return redirect('/user/profile')
 
-    return render(request, 'registration/edit_profile.html', {'user': request.user})
+    return render(request, 'registration/edit_profile.html', generate_context(request, {'user': request.user}))

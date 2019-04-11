@@ -47,6 +47,13 @@
     let csrf_token = '{{ csrf_token }}';
 
     let settings = {{ settings|safe }};
+
+    {% if settings_theme == 0 %}
+        let text_color = '#fff';
+    {% elif settings_theme == 1 %}
+        let text_color = '#000';
+    {% endif %}
+
     </script>
     <script src="{% static "js/test_module.js" %}"></script>
 {% endblock %}

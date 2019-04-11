@@ -9,6 +9,9 @@
   {% csrf_token %}
   <table>
     <tr>
+        <td><b>Profile settings</b></td>
+    </tr>
+    <tr>
         <td>Username:</td>
         <td><input type="text" name="username" value="{{ user.username }}"></td>
     </tr>
@@ -23,6 +26,33 @@
     <tr>
         <td>E-Mail:</td>
         <td><input type="text" name="email" value="{{ user.email }}"></td>
+    </tr>
+    <tr>
+        <td><b>Appearance settings</b></td>
+    </tr>
+    <tr>
+        <td>Language:</td>
+        <td>
+            {% if settings_lang == 0 %}
+                <input type="radio" name="lang" value="0" checked="checked">English <br>
+                <input type="radio" name="lang" value="1" >Dutch
+            {% elif settings_lang == 1 %}
+                <input type="radio" name="lang" value="0" >English <br>
+                <input type="radio" name="lang" value="1" checked="checked">Dutch
+            {% endif %}
+        </td>
+    </tr>
+    <tr>
+        <td>Theme:</td>
+        <td>
+            {% if settings_theme == 0 %}
+                <input type="radio" name="theme" value="0" checked="checked">Light <br>
+                <input type="radio" name="theme" value="1" >Dark
+            {% elif settings_theme == 1 %}
+                <input type="radio" name="theme" value="0" >Light <br>
+                <input type="radio" name="theme" value="1" checked="checked">Dark
+            {% endif %}
+        </td>
     </tr>
   </table>
   <input type="submit" value="Save">
