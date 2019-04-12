@@ -46,3 +46,10 @@ class Settings(models.Model):
     user = models.ForeignKey(to=User, on_delete=models.CASCADE)
     interface_theme = models.IntegerField(default=0)
     interface_language = models.IntegerField(default=0)
+
+
+class TranslationString(models.Model):
+    name = models.CharField(max_length=255, unique=True)
+    page_url = models.CharField(max_length=255)
+    engl = models.CharField(max_length=2000)
+    dutch = models.CharField(max_length=2000)

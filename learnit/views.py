@@ -8,7 +8,9 @@ from django.shortcuts import render, redirect
 from django.template.loader import get_template
 
 from .forms import UserForm
-from .models import Subject, List, Question, TestResults, Settings
+from .models import Subject, \
+    List, Question, TestResults, \
+    Settings, TranslationString
 
 
 def generate_context(request, context):
@@ -16,6 +18,20 @@ def generate_context(request, context):
         settings = Settings.objects.get(user=request.user)
         context['settings_theme'] = settings.interface_theme
         context['settings_lang'] = settings.interface_language
+
+        strings_d = []
+        strings = TranslationString.objects.filter(page_url=request.path)
+
+        if settings.interface_language == 0:
+            for string in strings:
+                strings_d.append(string.engl)
+
+        if settings.interface_language == 1:
+            for string in strings:
+                strings_d.append(string.dutch)
+
+        context["strings"] = strings_d
+
     return context
 
 
