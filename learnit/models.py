@@ -39,6 +39,8 @@ class List(models.Model):
 
 class TestResults(models.Model):
     grade = models.FloatField()
+    correct_answers = models.IntegerField(default=0)
+    wrong_answers = models.IntegerField(default=0)
     initial_question_amount = models.IntegerField(default=0)
     total_question_amount = models.IntegerField(default=0)
     difficult_questions_amount = models.IntegerField(default=0)
