@@ -13,6 +13,13 @@ from .models import Subject, \
     Settings
 
 
+def BinarySearch(lys, val):
+    for i in range(len(lys)):
+        if lys[i].pk == val.pk:
+            return i
+    return None
+
+
 def generate_context(request, context):
     if request.user.is_authenticated:
         settings = Settings.objects.get(user=request.user)
@@ -115,6 +122,56 @@ def add_list(request):
     }))
 
 
+def edit_list(request, list):
+    if not request.user.is_authenticated:
+        return redirect('/login')
+    if request.method == 'POST':
+        n_list = List.objects.get(pk=list)
+        n_list.name = request.POST["name"]
+        n_list.question_subject = Subject.objects.get(pk=request.POST["question_subject"])
+        n_list.answer_subject = Subject.objects.get(pk=request.POST["answer_subject"])
+        n_list.owner = request.user
+        n_list.save()
+        questions = []
+
+        go = True
+        n_index = 1
+        while go:
+            question = Question()
+            try:
+                question.question = request.POST["question_" + str(n_index)]
+                question.answer = request.POST["answer_" + str(n_index)]
+                if question.answer != "" and question.question != "":
+                    question.save()
+                    questions.append(question)
+                n_index += 1
+            except KeyError:
+                go = False
+
+        n_list.questions.clear()
+
+        for question in questions:
+            n_list.questions.add(question)
+
+        n_list.save()
+
+        return redirect("/app/lists")
+
+    subjects = Subject.objects.all()
+    g_list = List.objects.get(pk=list)
+    question_id = BinarySearch(subjects, g_list.question_subject)
+    answer_id = BinarySearch(subjects, g_list.answer_subject)
+
+    return render(request, 'app/edit.html', generate_context(request, {
+        'subjects': subjects,
+        'list': g_list,
+        'subject_ids': {
+            'question': question_id,
+            'answer': answer_id
+        }
+    }))
+
+
 def lists(request):
     if not request.user.is_authenticated:
         return redirect('/login')
@@ -143,9 +200,6 @@ def test(request, list_id):
         'delay': float(request.POST["delay"])*1000,
         'case_sensitive': request.POST['case_sensitive']
     }
-
-    # print(settings)
-    # print(json.dumps(settings))
 
     return render(request, 'app/test.html', generate_context(request, {
         'questions': n_list.questions.all(),

@@ -26,6 +26,7 @@
             {% endif %}
             <td></td>
             <td></td>
+            <td></td>
             </tr>
             {% for list in lists %}
                 <tr>
@@ -40,6 +41,8 @@
                     <td><a class="delete_list" href="/app/delete/{{ list.get_test }}"><i class="fas fa-trash"></i></a>
                     </td>
                     <td><a class="test_list" href="/app/test/{{ list.get_test }}"><i class="far fa-play-circle"></i></a>
+                    </td>
+                    <td><a class="test_list" href="{{ list.get_edit_url }}"><i class="fas fa-pencil-alt"></i></a>
                     </td>
                 </tr>
             {% endfor %}

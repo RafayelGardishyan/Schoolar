@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.urls import reverse
 
 
 class Question(models.Model):
@@ -30,6 +31,9 @@ class List(models.Model):
 
     def get_test(self):
         return str(self.pk)
+
+    def get_edit_url(self):
+        return reverse('edit_list', args=[self.pk])
 
 
 class TestResults(models.Model):
