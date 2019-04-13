@@ -2,107 +2,130 @@
 
 {% block content %}
 
-<h2>Add list</h2>
+    {% if settings_lang == 0 %}
+        <h2>Add list</h2>
+    {% elif settings_lang == 1 %}
+        <h2>Lijst toevoegen</h2>
+    {% endif %}
 
-<form method="post" action="">
-{% csrf_token %}
-    <table >
-    <tr>
-    <td>
-    <label for="name">List name:</label>
-    </td>
-    <td>
-    <input name="name" type="text" required>
-    </td>
-    </tr>
-    <tr>
-    <td>Question</td>
-    <td>Answer</td>
-</tr>
-        <tr>
-            <td>
-                <select name="question_subject">
-                {% for subject in subjects %}
+    <form method="post" action="">
+        {% csrf_token %}
+        <table>
+            <tr>
+                <td>
                     {% if settings_lang == 0 %}
-                        <option value="{{ subject.pk }}">{{ subject.name }}</option>
-                    {% elif settings_lang == 1 %}
-                        <option value="{{ subject.pk }}">{{ subject.name_dutch }}</option>
+                        <label for="name">List name:</label>
+                        </td>
+                        <td>
+                            <input name="name" type="text" required>
+                        </td>
+                        </tr>
+                        <tr>
+                            <td>Question</td>
+                            <td>Answer</td>
+                            {% elif settings_lang == 1 %}
+                            <label for="name">Naam:</label>
+                            </td>
+                            <td>
+                                <input name="name" type="text" required>
+                            </td>
+                        </tr>
+                        <tr>
+                        <td>Vraag</td>
+                        <td>Antwoord</td>
                     {% endif %}
-                {% endfor %}
-                </select>
-            </td>
-            <td>
-                <select name="answer_subject">
-                {% for subject in subjects %}
-                    {% if settings_lang == 0 %}
-                        <option value="{{ subject.pk }}">{{ subject.name }}</option>
-                    {% elif settings_lang == 1 %}
-                        <option value="{{ subject.pk }}">{{ subject.name_dutch }}</option>
-                    {% endif %}
-                {% endfor %}
-            </select>
-            </td>
-        </tr>
-        <tr>
-            <td id="questions">
-                <input type="text" id="question_1" name="question_1">
-            </td>
-            <td id="answers">
-                <input type="text" id="answer_1" name="answer_1">
-            </td>
-        </tr>
-    </table>
-    <button id="add_inputs_c" type="button" onclick="add_inputs()">Add Inputs</button>
-    <button  id="remove_inputs_c" type="button" onclick="remove_inputs()">Remove Inputs</button>
-    <br>
-    <input type="submit" value="Save" name="submit">
-</form>
+                    </tr>
+            <tr>
+                <td>
+                    <select name="question_subject">
+                        {% for subject in subjects %}
+                            {% if settings_lang == 0 %}
+                                <option value="{{ subject.pk }}">{{ subject.name }}</option>
+                            {% elif settings_lang == 1 %}
+                                <option value="{{ subject.pk }}">{{ subject.name_dutch }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </td>
+                <td>
+                    <select name="answer_subject">
+                        {% for subject in subjects %}
+                            {% if settings_lang == 0 %}
+                                <option value="{{ subject.pk }}">{{ subject.name }}</option>
+                            {% elif settings_lang == 1 %}
+                                <option value="{{ subject.pk }}">{{ subject.name_dutch }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td id="questions">
+                    <input type="text" id="question_1" name="question_1">
+                </td>
+                <td id="answers">
+                    <input type="text" id="answer_1" name="answer_1">
+                </td>
+            </tr>
+        </table>
+        {% if settings_lang == 0 %}
+            <button id="add_inputs_c" type="button" onclick="add_inputs()">Add Inputs</button>
+            {#    <button  id="remove_inputs_c" type="button" onclick="remove_inputs()">Remove Inputs</button>#}
+            <br>
+            <input type="submit" value="Save" name="submit">
+        {% elif settings_lang == 1 %}
+            <button id="add_inputs_c" type="button" onclick="add_inputs()">Velden toevoegen</button>
+            {#    <button  id="remove_inputs_c" type="button" onclick="remove_inputs()">Remove Inputs</button>#}
+            <br>
+            <input type="submit" value="Opslaan" name="submit">
+        {% endif %}
+    </form>
 
-<script>
-    let question_index = 2;
-    let n_values = {};
-function add_inputs() {
+    <script>
+        let question_index = 2;
+        let n_values = {};
 
-  for (let i=1; i<question_index; i++){
-      n_values[i] = {
-          question: document.getElementById("question_" + i).value,
-          answer: document.getElementById("answer_" + i).value
-      };
-  }
-  document.getElementById('questions').innerHTML += '<br id="br_q_' + question_index +'"> <input type="text" id="question_' + question_index + '" name="question_' + question_index + '">';
-  document.getElementById('answers').innerHTML += '<br id="br_a_' + question_index +'"> <input type="text" id="answer_' + question_index + '" name="answer_' + question_index + '">';
+        function add_inputs() {
+            for (let k = 1; k < 5; k++) {
+                for (let i = 1; i < question_index; i++) {
+                    n_values[i] = {
+                        question: document.getElementById("question_" + i).value,
+                        answer: document.getElementById("answer_" + i).value
+                    };
+                }
+                document.getElementById('questions').innerHTML += '<br id="br_q_' + question_index + '"> <input type="text" id="question_' + question_index + '" name="question_' + question_index + '">';
+                document.getElementById('answers').innerHTML += '<br id="br_a_' + question_index + '"> <input type="text" id="answer_' + question_index + '" name="answer_' + question_index + '">';
 
-  for (let i=1; i<question_index; i++){
-      document.getElementById("question_" + i).value = n_values[i].question;
-      document.getElementById("answer_" + i).value = n_values[i].answer;
-  }
+                for (let i = 1; i < question_index; i++) {
+                    document.getElementById("question_" + i).value = n_values[i].question;
+                    document.getElementById("answer_" + i).value = n_values[i].answer;
+                }
 
- question_index++;
-}
+                question_index++;
+            }
+        }
 
-function remove_inputs() {
-  if (question_index === 2){
-      return;
-  }
+        function remove_inputs() {
+            if (question_index === 2) {
+                return;
+            }
 
-  question_index--;
-  let element = document.getElementById('question_' + (question_index));
-  element.parentNode.removeChild(element);
+            question_index--;
+            let element = document.getElementById('question_' + (question_index));
+            element.parentNode.removeChild(element);
 
-  element = document.getElementById('answer_' + (question_index));
-  element.parentNode.removeChild(element);
+            element = document.getElementById('answer_' + (question_index));
+            element.parentNode.removeChild(element);
 
-  element = document.getElementById('br_q_' + (question_index));
-  element.parentNode.removeChild(element);
+            element = document.getElementById('br_q_' + (question_index));
+            element.parentNode.removeChild(element);
 
-  element = document.getElementById('br_a_' + (question_index));
-  element.parentNode.removeChild(element);
-}
+            element = document.getElementById('br_a_' + (question_index));
+            element.parentNode.removeChild(element);
+        }
 
-for (let i=0; i<5; i++){
-    add_inputs();
-}
+        add_inputs();
 
-</script>
+    </script>
 
 {% endblock %}

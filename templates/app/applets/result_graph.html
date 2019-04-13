@@ -1,43 +1,80 @@
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">
-      google.charts.load('current', {'packages':['corechart']});
-      google.charts.setOnLoadCallback(drawChart);
+    google.charts.load('current', {'packages': ['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
 
-      function drawChart() {
+    function drawChart() {
         var data = google.visualization.arrayToDataTable([
-          ['ID',      'Grade',      'Difficult Words'],
-          {% for result in results %}
-          [{{result.pk}}, {{result.grade}}, {{result.get_difficult_words_count}}],
-          {% endfor %}
+            {% if settings_lang == 0 %}
+                ['ID', 'Grade', 'Difficult Words'],
+            {% elif settings_lang == 1 %}
+                ['ID', 'Cijfer', 'Moeilijke woorden'],
+            {% endif %}
+            {% for result in results %}
+                [{{result.pk}}, {{result.grade}}, {{result.get_difficult_words_count}}],
+            {% endfor %}
 
         ]);
 
-        var options = {
-          title: 'Your test results',
-          curveType: 'function',
-          legend: {
-              position: 'bottom',
-              textStyle: {
-                  color: "#FFFFFF"
-              }
-          },
-          backgroundColor: {
-              fill: "#333333"
-          },
-          hAxis: {
-              textStyle:{color: '#FFF'}
-          },
-          vAxis: {
-              textStyle:{color: '#FFF'}
-          },
-          titleTextStyle: {
-              color: "FFFFFF"
-          }
-        };
+        {% if settings_theme == 0 %}
+            var options = {
+                {% if settings_lang == 0 %}
+                    title: 'Your test results',
+                {% elif settings_lang == 1 %}
+                    title: 'Je toetsresultaten',
+                {% endif %}
+                curveType: 'function',
+                legend: {
+                    position: 'bottom',
+                    textStyle: {
+                        color: "#000000"
+                    }
+                },
+                backgroundColor: {
+                    fill: "#eeeeee"
+                },
+                hAxis: {
+                    textStyle: {color: '#000000'}
+                },
+                vAxis: {
+                    textStyle: {color: '#000000'}
+                },
+                titleTextStyle: {
+                    color: "#000000"
+                }
+            };
+        {% elif settings_theme == 1 %}
+            var options = {
+                {% if settings_lang == 0 %}
+                    title: 'Your test results',
+                {% elif settings_lang == 1 %}
+                    title: 'Je toetsresultaten',
+                {% endif %}
+                curveType: 'function',
+                legend: {
+                    position: 'bottom',
+                    textStyle: {
+                        color: "#FFFFFF"
+                    }
+                },
+                backgroundColor: {
+                    fill: "#333333"
+                },
+                hAxis: {
+                    textStyle: {color: '#FFF'}
+                },
+                vAxis: {
+                    textStyle: {color: '#FFF'}
+                },
+                titleTextStyle: {
+                    color: "FFFFFF"
+                }
+            };
+        {% endif %}
 
         var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
 
         chart.draw(data, options);
-      }
+    }
 </script>
 <div id="curve_chart" style="width: 900px; height: 500px"></div>

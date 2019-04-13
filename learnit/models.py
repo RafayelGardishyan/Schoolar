@@ -18,16 +18,6 @@ class Subject(models.Model):
         return self.name
 
 
-class TestResults(models.Model):
-    grade = models.IntegerField()
-    user = models.ForeignKey(to=User, on_delete=models.CASCADE)
-    datetime = models.DateTimeField(auto_now=True)
-    difficult_questions = models.ManyToManyField(to=Question)
-
-    def get_difficult_words_count(self):
-        return self.difficult_questions.all().count()
-
-
 class List(models.Model):
     name = models.CharField(max_length=255)
     owner = models.ForeignKey(to=User, on_delete=models.CASCADE)
@@ -40,6 +30,17 @@ class List(models.Model):
 
     def get_test(self):
         return str(self.pk)
+
+
+class TestResults(models.Model):
+    grade = models.IntegerField()
+    user = models.ForeignKey(to=User, on_delete=models.CASCADE)
+    datetime = models.DateTimeField(auto_now=True)
+    difficult_questions = models.ManyToManyField(to=Question)
+    # list = models.ForeignKey(to=List, on_delete=models.CASCADE, default=List.objects.get())
+
+    def get_difficult_words_count(self):
+        return self.difficult_questions.all().count()
 
 
 class Settings(models.Model):

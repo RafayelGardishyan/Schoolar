@@ -3,7 +3,8 @@
 {% block title %}Login{% endblock %}
 
 {% block content %}
-  <h2>Profile</h2>
+    {% if settings_lang == 0 %}
+        <h2>Profile</h2>
   <h3>User data</h3>
   <h4><a class="link_button" href="/user/profile/edit">Edit</a></h4>
   <table>
@@ -33,6 +34,38 @@
 </tr>
 </table>
 <h3>Stats</h3>
+{% elif settings_lang == 1 %}
+        <h2>Profiel</h2>
+  <h3>Gegevens</h3>
+  <h4><a class="link_button" href="/user/profile/edit">Bewerken</a></h4>
+  <table>
+  <tr>
+  <td>
+  Username:
+</td>
+<td>{{ user.username }}</td>
+</tr>
+  <tr>
+  <td>
+  Voornaam:
+</td>
+<td>{{ user.first_name }}</td>
+</tr>
+  <tr>
+  <td>
+  Achternaam:
+</td>
+<td>{{ user.last_name }}</td>
+</tr>
+  <tr>
+  <td>
+  E-Mail:
+</td>
+<td>{{ user.email }}</td>
+</tr>
+</table>
+<h3>Statistieken</h3>
+{% endif %}
 
 <div id="results">
 {% include "app/applets/result_graph.html" %}
