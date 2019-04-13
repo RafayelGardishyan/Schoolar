@@ -1,3 +1,4 @@
+import datetime
 import json
 import random
 import string
@@ -6,6 +7,7 @@ from django.core.mail import send_mail
 from django.http import BadHeaderError
 from django.shortcuts import render, redirect
 from django.template.loader import get_template
+from django.utils import timezone
 
 from .forms import UserForm
 from .models import Subject, \
@@ -226,9 +228,17 @@ def register_results(request):
     if request.method != 'POST':
         return redirect('/')
 
+    stats = json.loads(request.POST["stats"])
+
     result = TestResults()
     result.user = request.user
-    result.grade = float(request.POST["average_score"])
+    result.grade = float(stats["averageScore"])
+    result.initial_question_amount = stats["initialQuestionAmount"]
+    result.total_question_amount = stats["totalQuestionAmount"]
+    result.difficult_questions_amount = stats["difficultWordsAmount"]
+    result.start_time = datetime.time(stats["startTime"][0], stats["startTime"][1], stats["startTime"][2])
+    result.end_time = datetime.time(stats["endTime"][0], stats["endTime"][1], stats["endTime"][2])
+
     result.save()
 
     diff_quest = json.loads(request.POST["difficult_words"])

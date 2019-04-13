@@ -6,12 +6,12 @@
     function drawChart() {
         var data = google.visualization.arrayToDataTable([
             {% if settings_lang == 0 %}
-                ['ID', 'Grade', 'Difficult Words'],
+                ['ID', 'Grade'],
             {% elif settings_lang == 1 %}
-                ['ID', 'Cijfer', 'Moeilijke woorden'],
+                ['ID', 'Cijfer'],
             {% endif %}
             {% for result in results %}
-                [{{result.pk}}, {{result.grade}}, {{result.get_difficult_words_count}}],
+                [{{result.pk}}, {{result.grade}}],
             {% endfor %}
 
         ]);
@@ -41,7 +41,9 @@
                 },
                 titleTextStyle: {
                     color: "#000000"
-                }
+                },
+                width: 750,
+                height: 500
             };
         {% elif settings_theme == 1 %}
             var options = {

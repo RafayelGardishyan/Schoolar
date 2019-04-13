@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
+from django.utils import timezone
 
 
 class Question(models.Model):
@@ -37,10 +38,15 @@ class List(models.Model):
 
 
 class TestResults(models.Model):
-    grade = models.IntegerField()
+    grade = models.FloatField()
+    initial_question_amount = models.IntegerField(default=0)
+    total_question_amount = models.IntegerField(default=0)
+    difficult_questions_amount = models.IntegerField(default=0)
     user = models.ForeignKey(to=User, on_delete=models.CASCADE)
     datetime = models.DateTimeField(auto_now=True)
     difficult_questions = models.ManyToManyField(to=Question)
+    start_time = models.TimeField(default=timezone.now)
+    end_time = models.TimeField(default=timezone.now)
     # list = models.ForeignKey(to=List, on_delete=models.CASCADE, default=List.objects.get())
 
     def get_difficult_words_count(self):
