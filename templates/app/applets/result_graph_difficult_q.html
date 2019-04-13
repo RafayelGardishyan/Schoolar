@@ -16,7 +16,7 @@
 
         data.addRows([
             {% for result in results %}
-                [{{result.pk}}, 100 - (100 / {{ result.total_question_amount }} * {{result.grade}})],
+                [{{result.pk}}, 100 - (100 / {{ result.initial_question_amount }} * {{result.grade}})],
             {% endfor %}
         ]);
 
