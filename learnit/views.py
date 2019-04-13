@@ -236,6 +236,8 @@ def register_results(request):
     result.initial_question_amount = stats["initialQuestionAmount"]
     result.total_question_amount = stats["totalQuestionAmount"]
     result.difficult_questions_amount = stats["difficultWordsAmount"]
+    result.correct_answers = stats["goodAnswers"]
+    result.wrong_answers = stats["wrongAnswers"]
     result.start_time = datetime.time(stats["startTime"][0], stats["startTime"][1], stats["startTime"][2])
     result.end_time = datetime.time(stats["endTime"][0], stats["endTime"][1], stats["endTime"][2])
 
