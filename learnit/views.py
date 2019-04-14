@@ -4,7 +4,7 @@ import random
 import string
 
 from django.core.mail import send_mail
-from django.http import BadHeaderError
+from django.http import BadHeaderError, JsonResponse
 from django.shortcuts import render, redirect
 from django.template.loader import get_template
 from django.utils import timezone
@@ -35,6 +35,26 @@ def index(request):
     if request.user.is_authenticated:
         return redirect('/app/home')
     return render(request, "index.html")
+
+
+def get_language_code(request):
+    return JsonResponse(
+        dict(
+            german="de-DE",
+            english="en-GB",
+            spanish="es-ES",
+            french="fr-FR",
+            hindu="hi-IN",
+            indonesian="id-ID",
+            italian="it-IT",
+            japan="ja-JP",
+            korean="ko-KR",
+            dutch="nl-NL",
+            polish="pl-PL",
+            brasilian="pt-BR",
+            russian="ru-RU",
+            chinese="zh-CN"
+        ), safe=False)
 
 
 def register(request):
@@ -196,11 +216,26 @@ def test(request, list_id):
             'list': n_list
         }))
 
+    if Settings.objects.get(user=request.user).interface_language == 0:
+        lang = "english"
+    else:
+        lang = "dutch"
+
+    if request.POST["question_subject"] == "question":
+        if n_list.question_subject.tts_support:
+            lang = n_list.question_subject.name.lower()
+    elif request.POST["question_subject"] == "answer":
+        if n_list.answer_subject.tts_support:
+            lang = n_list.answer_subject.name.lower()
+
+    print(lang)
+
     settings = {
         'question_subject': request.POST["question_subject"],
         'mode': request.POST["test_mode"],
         'delay': float(request.POST["delay"])*1000,
-        'case_sensitive': request.POST['case_sensitive']
+        'case_sensitive': request.POST['case_sensitive'],
+        'tts_lang': lang
     }
 
     return render(request, 'app/test.html', generate_context(request, {

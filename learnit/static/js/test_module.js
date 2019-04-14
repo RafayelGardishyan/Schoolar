@@ -93,10 +93,8 @@ function setWord(word) {
     if (settings.mode === "shuffle") {
         if (settings.question_subject === "question") {
             document.getElementById("question").innerText = word.question.shuffle().toLowerCase();
-            ;
         } else {
             document.getElementById("question").innerText = word.answer.shuffle().toLowerCase();
-            ;
         }
     } else {
 
@@ -108,6 +106,32 @@ function setWord(word) {
     }
 
     document.getElementById("input_box").value = "";
+
+    if ('speechSynthesis' in window) {
+        let msg;
+        if (settings.question_subject === "question") {
+            msg = new SpeechSynthesisUtterance(word.question);
+        } else {
+            msg = new SpeechSynthesisUtterance(word.answer);
+        }
+        msg.lang = get_lang_code();
+        window.speechSynthesis.speak(msg);
+    }
+
+}
+
+function httpGet(theUrl)
+{
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
+    xmlHttp.send( null );
+    return xmlHttp.responseText;
+}
+
+function get_lang_code() {
+    let codes = httpGet("/app/api/getlangcode");
+    codes = JSON.parse(codes);
+    return codes[settings.tts_lang];
 }
 
 function include(arr, obj) {

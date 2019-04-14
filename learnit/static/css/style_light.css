@@ -199,7 +199,7 @@ progress[value] {
   height: 20px;
 }
 
-progress[value]::-webkit-progress-value, progress[value]::-moz-progress-bar {
+progress[value]::-webkit-progress-value {
   background-image:
 	   -webkit-linear-gradient(-45deg,
 	                           transparent 33%, rgba(0, 0, 0, .1) 33%,
@@ -230,7 +230,7 @@ progress::-webkit-progress-bar, progress::-moz-progress-bar {
 	position: absolute;
 	width: 100%;
 	text-align: center;
-	color: #999;
+	color: #fff;
 }
 
 #progressBar {

@@ -17,5 +17,6 @@ urlpatterns = [
     path('login/', auth_views.LoginView.as_view(template_name='registration/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(template_name='registration/logout.html'), {'next_page': '/logged_out'}, name='logout'),
     path('logged_out/', views.logged_out, name='logged_out'),
-    path('register', views.register)
+    path('register', views.register),
+    path('app/api/getlangcode', views.get_language_code, name="api/getlangcode")
 ]
