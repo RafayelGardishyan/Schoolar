@@ -235,6 +235,7 @@ def test(request, list_id):
         'mode': request.POST["test_mode"],
         'delay': float(request.POST["delay"])*1000,
         'case_sensitive': request.POST['case_sensitive'],
+        'tts_enabled': request.POST['tts'],
         'tts_lang': lang
     }
 

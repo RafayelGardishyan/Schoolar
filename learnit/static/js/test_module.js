@@ -107,7 +107,7 @@ function setWord(word) {
 
     document.getElementById("input_box").value = "";
 
-    if ('speechSynthesis' in window) {
+    if ('speechSynthesis' in window && settings.tts_enabled === "yes") {
         let msg;
         if (settings.question_subject === "question") {
             msg = new SpeechSynthesisUtterance(word.question);
