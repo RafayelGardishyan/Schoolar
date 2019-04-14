@@ -29,20 +29,8 @@
 <div class="wrapper">
     <div class="header">
         <h1 id="title">Learn It</h1>
-        {% if settings_lang == 0 %}
-        <nav>
-            <li class="nav-item"><a href="/">Home</a></li>
-            <li class="nav-item"><a href="/app/lists">Lists</a></li>
-            <li class="nav-item"><a href="#">Quick Learn</a></li>
-            {% if user.is_authenticated %}
-                <li class="nav-item"><a href="/user/profile">My Profile</a></li>
-                <li class="nav-item"><a href="/logout">Log Out</a></li>
-            {% else %}
-                <li class="nav-item"><a href="/login">Log In</a></li>
-                <li class="nav-item"><a href="/register">Register</a></li>
-            {% endif %}
-        </nav>
-        {% elif settings_lang == 1 %}
+
+        {% if settings_lang == 1 %}
         <nav>
             <li class="nav-item"><a href="/">Home</a></li>
             <li class="nav-item"><a href="/app/lists">Lijsten</a></li>
@@ -53,6 +41,19 @@
             {% else %}
                 <li class="nav-item"><a href="/login">Aanmelden</a></li>
                 <li class="nav-item"><a href="/register">Registreren</a></li>
+            {% endif %}
+        </nav>
+        {% else %}
+        <nav>
+            <li class="nav-item"><a href="/">Home</a></li>
+            <li class="nav-item"><a href="/app/lists">Lists</a></li>
+            <li class="nav-item"><a href="#">Quick Learn</a></li>
+            {% if user.is_authenticated %}
+                <li class="nav-item"><a href="/user/profile">My Profile</a></li>
+                <li class="nav-item"><a href="/logout">Log Out</a></li>
+            {% else %}
+                <li class="nav-item"><a href="/login">Log In</a></li>
+                <li class="nav-item"><a href="/register">Register</a></li>
             {% endif %}
         </nav>
         {% endif %}

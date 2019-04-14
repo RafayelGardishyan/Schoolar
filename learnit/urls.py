@@ -6,6 +6,7 @@ urlpatterns = [
     path('', views.index, name='home'),
     path('app/home/', views.app_home, name='app_home'),
     path('app/add/', views.add_list, name='add_list'),
+    path('app/edit/<int:list>', views.edit_list, name='edit_list'),
     path('app/lists/', views.lists, name='lists'),
     path('app/test/<int:list_id>', views.test, name='test'),
     path('app/delete/<int:list_id>', views.delete, name='test'),
@@ -16,5 +17,6 @@ urlpatterns = [
     path('login/', auth_views.LoginView.as_view(template_name='registration/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(template_name='registration/logout.html'), {'next_page': '/logged_out'}, name='logout'),
     path('logged_out/', views.logged_out, name='logged_out'),
-    path('register', views.register)
+    path('register', views.register),
+    path('app/api/getlangcode', views.get_language_code, name="api/getlangcode")
 ]

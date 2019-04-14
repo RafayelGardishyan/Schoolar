@@ -2,7 +2,8 @@
 
 {% block content %}
 
-    <h2>Your Results</h2>
+    {% if settings_lang == 0 %}
+            <h2>Your Results</h2>
     <h3>Your grade: {{ result.grade }}</h3>
     {% if result.difficult_questions.all %}
     <h3>Difficult Questions:</h3>
@@ -15,5 +16,20 @@
 {% endfor %}
 {% endif %}
 </table>
+{% elif settings_lang == 1 %}
+            <h2>Je resultaten</h2>
+    <h3>Cijfer: {{ result.grade }}</h3>
+    {% if result.difficult_questions.all %}
+    <h3>Moeilijke vragen:</h3>
+    <table>
+    {% for question in result.difficult_questions.all %}
+    <tr>
+    <td>{{ question.question }}</td>
+    <td>{{ question.answer }}</td>
+</tr>
+{% endfor %}
+{% endif %}
+</table>
+{% endif %}
 
 {% endblock %}

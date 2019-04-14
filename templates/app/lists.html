@@ -3,27 +3,49 @@
 {% block title %}Login{% endblock %}
 
 {% block content %}
-  <h2>My lists</h2>
-  <h4><a class="link_button" href="/app/add">Add a list &nbsp;&nbsp;&nbsp;&nbsp;<i class="fas fa-plus"></i></a></h4>
+    {% if settings_lang == 0 %}
+    <h2>My lists</h2>
+    <h4><a class="link_button" href="/app/add">Add a list &nbsp;&nbsp;&nbsp;&nbsp;<i class="fas fa-plus"></i></a></h4>
+    {% elif settings_lang == 1 %}
+    <h2>Mijn lijsten</h2>
+    <h4><a class="link_button" href="/app/add">Lijst toevoegen &nbsp;&nbsp;&nbsp;&nbsp;<i class="fas fa-plus"></i></a></h4>
+    {% endif %}
 
-  {% if lists %}
-  <table>
-  <tr id="table_header">
-  <td>Name</td>
-  <td>Question Subject</td>
-  <td>Answer Subject</td>
-  <td></td>
-  <td></td>
-</tr>
-{% for list in lists %}
-<tr>
-  <td>{{ list.name }}</td>
-  <td>{{ list.question_subject }}</td>
-  <td>{{ list.answer_subject }}</td>
-  <td><a class="delete_list" href="/app/delete/{{ list.get_test }}"><i class="fas fa-trash"></i></a></td>
-  <td><a class="test_list" href="/app/test/{{ list.get_test }}"><i class="far fa-play-circle"></i></a></td>
-</tr>
-{% endfor %}
-</table>
-{% endif %}
+    {% if lists %}
+        <table>
+            {% if settings_lang == 0 %}
+                <tr id="table_header">
+                    <td>Name</td>
+                    <td>Question Subject</td>
+                    <td>Answer Subject</td>
+            {% elif settings_lang == 1 %}
+                <tr id="table_header">
+                    <td>Naam</td>
+                    <td>Vraag Onderwerp</td>
+                    <td>Antwoord Onderwerp</td>
+            {% endif %}
+            <td></td>
+            <td></td>
+            <td></td>
+            </tr>
+            {% for list in lists %}
+                <tr>
+                    <td>{{ list.name }}</td>
+                    {% if settings_lang == 0 %}
+                    <td>{{ list.question_subject.name }}</td>
+                    <td>{{ list.answer_subject.name }}</td>
+                    {% elif settings_lang == 1 %}
+                        <td>{{ list.question_subject.name_dutch }}</td>
+                    <td>{{ list.answer_subject.name_dutch }}</td>
+                    {% endif %}
+                    <td><a class="delete_list" href="/app/delete/{{ list.get_test }}"><i class="fas fa-trash"></i></a>
+                    </td>
+                    <td><a class="test_list" href="/app/test/{{ list.get_test }}"><i class="far fa-play-circle"></i></a>
+                    </td>
+                    <td><a class="test_list" href="{{ list.get_edit_url }}"><i class="fas fa-pencil-alt"></i></a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
 {% endblock %}

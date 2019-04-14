@@ -2,7 +2,13 @@
 
 {% block content %}
 
+{% if settings_lang == 0 %}
     <h2>Welcome, {{ username }}</h2>
     <a class="link_button" href="/app/lists">Start Learning</a>
+{% elif settings_lang == 1 %}
+    <h2>Welkom, {{ username }}</h2>
+    <a class="link_button" href="/app/lists">Begin met leren</a>
+
+{% endif %}
 
 {% endblock %}

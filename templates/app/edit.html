@@ -3,9 +3,9 @@
 {% block content %}
 
     {% if settings_lang == 0 %}
-        <h2>Add list</h2>
+        <h2>Edit list</h2>
     {% elif settings_lang == 1 %}
-        <h2>Lijst toevoegen</h2>
+        <h2>Lijst bewerken</h2>
     {% endif %}
 
     <form method="post" action="">
@@ -105,6 +105,24 @@
             }
         }
 
+        function add_input_with_values(question, answer) {
+                for (let i = 1; i < question_index; i++) {
+                    n_values[i] = {
+                        question: document.getElementById("question_" + i).value,
+                        answer: document.getElementById("answer_" + i).value
+                    };
+                }
+                document.getElementById('questions').innerHTML += '<br id="br_q_' + question_index + '"> <input value=' + question + ' type="text" id="question_' + question_index + '" name="question_' + question_index + '">';
+                document.getElementById('answers').innerHTML += '<br id="br_a_' + question_index + '"> <input value=' + answer + ' type="text" id="answer_' + question_index + '" name="answer_' + question_index + '">';
+
+                for (let i = 1; i < question_index; i++) {
+                    document.getElementById("question_" + i).value = n_values[i].question;
+                    document.getElementById("answer_" + i).value = n_values[i].answer;
+                }
+
+                question_index++;
+        }
+
         function remove_inputs() {
             if (question_index === 2) {
                 return;
@@ -124,8 +142,15 @@
             element.parentNode.removeChild(element);
         }
 
-        add_inputs();
+        document.getElementsByName("name")[0].value = "{{ list.name }}";
+        document.getElementsByName("question_subject")[0].selectedIndex = "{{ subject_ids.question }}";
+        document.getElementsByName("answer_subject")[0].selectedIndex = "{{ subject_ids.answer }}";
 
+        {% for question in list.questions.all %}
+
+            add_input_with_values("{{ question.question }}", "{{ question.answer }}");
+
+        {% endfor %}
     </script>
 
 {% endblock %}

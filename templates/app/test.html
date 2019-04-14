@@ -49,9 +49,9 @@
     let settings = {{ settings|safe }};
 
     {% if settings_theme == 0 %}
-        let text_color = '#fff';
-    {% elif settings_theme == 1 %}
         let text_color = '#000';
+    {% elif settings_theme == 1 %}
+        let text_color = '#bbb';
     {% endif %}
 
     </script>

@@ -220,7 +220,7 @@ progress[value]::-webkit-progress-value {
     background-color: #333;
 }
 
-progress::-webkit-progress-bar {
+progress::-webkit-progress-bar{
     width: 96vw;
     background-color: #333;
     /*display: inline;*/
@@ -230,9 +230,10 @@ progress::-webkit-progress-bar {
 	position: absolute;
 	width: 100%;
 	text-align: center;
-	color: white;
+	color: #fff;
 }
 
 #progressBar {
 	width: 100%;
 }
+

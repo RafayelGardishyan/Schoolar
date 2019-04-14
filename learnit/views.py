@@ -1,14 +1,25 @@
+import datetime
 import json
 import random
 import string
 
 from django.core.mail import send_mail
-from django.http import BadHeaderError
+from django.http import BadHeaderError, JsonResponse
 from django.shortcuts import render, redirect
 from django.template.loader import get_template
+from django.utils import timezone
 
 from .forms import UserForm
-from .models import Subject, List, Question, TestResults, Settings
+from .models import Subject, \
+    List, Question, TestResults, \
+    Settings
+
+
+def BinarySearch(lys, val):
+    for i in range(len(lys)):
+        if lys[i].pk == val.pk:
+            return i
+    return None
 
 
 def generate_context(request, context):
@@ -16,6 +27,7 @@ def generate_context(request, context):
         settings = Settings.objects.get(user=request.user)
         context['settings_theme'] = settings.interface_theme
         context['settings_lang'] = settings.interface_language
+
     return context
 
 
@@ -23,6 +35,26 @@ def index(request):
     if request.user.is_authenticated:
         return redirect('/app/home')
     return render(request, "index.html")
+
+
+def get_language_code(request):
+    return JsonResponse(
+        dict(
+            german="de-DE",
+            english="en-GB",
+            spanish="es-ES",
+            french="fr-FR",
+            hindu="hi-IN",
+            indonesian="id-ID",
+            italian="it-IT",
+            japan="ja-JP",
+            korean="ko-KR",
+            dutch="nl-NL",
+            polish="pl-PL",
+            brasilian="pt-BR",
+            russian="ru-RU",
+            chinese="zh-CN"
+        ), safe=False)
 
 
 def register(request):
@@ -112,6 +144,56 @@ def add_list(request):
     }))
 
 
+def edit_list(request, list):
+    if not request.user.is_authenticated:
+        return redirect('/login')
+    if request.method == 'POST':
+        n_list = List.objects.get(pk=list)
+        n_list.name = request.POST["name"]
+        n_list.question_subject = Subject.objects.get(pk=request.POST["question_subject"])
+        n_list.answer_subject = Subject.objects.get(pk=request.POST["answer_subject"])
+        n_list.owner = request.user
+        n_list.save()
+        questions = []
+
+        go = True
+        n_index = 1
+        while go:
+            question = Question()
+            try:
+                question.question = request.POST["question_" + str(n_index)]
+                question.answer = request.POST["answer_" + str(n_index)]
+                if question.answer != "" and question.question != "":
+                    question.save()
+                    questions.append(question)
+                n_index += 1
+            except KeyError:
+                go = False
+
+        n_list.questions.clear()
+
+        for question in questions:
+            n_list.questions.add(question)
+
+        n_list.save()
+
+        return redirect("/app/lists")
+
+    subjects = Subject.objects.all()
+    g_list = List.objects.get(pk=list)
+    question_id = BinarySearch(subjects, g_list.question_subject)
+    answer_id = BinarySearch(subjects, g_list.answer_subject)
+
+    return render(request, 'app/edit.html', generate_context(request, {
+        'subjects': subjects,
+        'list': g_list,
+        'subject_ids': {
+            'question': question_id,
+            'answer': answer_id
+        }
+    }))
+
+
 def lists(request):
     if not request.user.is_authenticated:
         return redirect('/login')
@@ -134,15 +216,28 @@ def test(request, list_id):
             'list': n_list
         }))
 
+    if Settings.objects.get(user=request.user).interface_language == 0:
+        lang = "english"
+    else:
+        lang = "dutch"
+
+    if request.POST["question_subject"] == "question":
+        if n_list.question_subject.tts_support:
+            lang = n_list.question_subject.name.lower()
+    elif request.POST["question_subject"] == "answer":
+        if n_list.answer_subject.tts_support:
+            lang = n_list.answer_subject.name.lower()
+
+    print(lang)
+
     settings = {
         'question_subject': request.POST["question_subject"],
         'mode': request.POST["test_mode"],
         'delay': float(request.POST["delay"])*1000,
-        'case_sensitive': request.POST['case_sensitive']
+        'case_sensitive': request.POST['case_sensitive'],
+        'tts_enabled': request.POST['tts'],
+        'tts_lang': lang
     }
-
-    # print(settings)
-    # print(json.dumps(settings))
 
     return render(request, 'app/test.html', generate_context(request, {
         'questions': n_list.questions.all(),
@@ -169,9 +264,19 @@ def register_results(request):
     if request.method != 'POST':
         return redirect('/')
 
+    stats = json.loads(request.POST["stats"])
+
     result = TestResults()
     result.user = request.user
-    result.grade = float(request.POST["average_score"])
+    result.grade = float(stats["averageScore"])
+    result.initial_question_amount = stats["initialQuestionAmount"]
+    result.total_question_amount = stats["totalQuestionAmount"]
+    result.difficult_questions_amount = stats["difficultWordsAmount"]
+    result.correct_answers = stats["goodAnswers"]
+    result.wrong_answers = stats["wrongAnswers"]
+    result.start_time = datetime.time(stats["startTime"][0], stats["startTime"][1], stats["startTime"][2])
+    result.end_time = datetime.time(stats["endTime"][0], stats["endTime"][1], stats["endTime"][2])
+
     result.save()
 
     diff_quest = json.loads(request.POST["difficult_words"])

@@ -1,5 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.urls import reverse
+from django.utils import timezone
 
 
 class Question(models.Model):
@@ -13,19 +15,10 @@ class Question(models.Model):
 class Subject(models.Model):
     name = models.CharField(max_length=255)
     name_dutch = models.CharField(max_length=255, default="UNKNOWN")
+    tts_support = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name
-
-
-class TestResults(models.Model):
-    grade = models.IntegerField()
-    user = models.ForeignKey(to=User, on_delete=models.CASCADE)
-    datetime = models.DateTimeField(auto_now=True)
-    difficult_questions = models.ManyToManyField(to=Question)
-
-    def get_difficult_words_count(self):
-        return self.difficult_questions.all().count()
 
 
 class List(models.Model):
@@ -41,8 +34,30 @@ class List(models.Model):
     def get_test(self):
         return str(self.pk)
 
+    def get_edit_url(self):
+        return reverse('edit_list', args=[self.pk])
+
+
+class TestResults(models.Model):
+    grade = models.FloatField()
+    correct_answers = models.IntegerField(default=0)
+    wrong_answers = models.IntegerField(default=0)
+    initial_question_amount = models.IntegerField(default=0)
+    total_question_amount = models.IntegerField(default=0)
+    difficult_questions_amount = models.IntegerField(default=0)
+    user = models.ForeignKey(to=User, on_delete=models.CASCADE)
+    datetime = models.DateTimeField(auto_now=True)
+    difficult_questions = models.ManyToManyField(to=Question)
+    start_time = models.TimeField(default=timezone.now)
+    end_time = models.TimeField(default=timezone.now)
+    # list = models.ForeignKey(to=List, on_delete=models.CASCADE, default=List.objects.get())
+
+    def get_difficult_words_count(self):
+        return self.difficult_questions.all().count()
+
 
 class Settings(models.Model):
     user = models.ForeignKey(to=User, on_delete=models.CASCADE)
     interface_theme = models.IntegerField(default=0)
     interface_language = models.IntegerField(default=0)
+
