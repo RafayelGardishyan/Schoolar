@@ -213,6 +213,7 @@ function flip() {
     } else {
         good_answer = current_question.question;
     }
+    enable_buttons();
     document.getElementById('correct_answer_fc').innerText = good_answer;
     document.getElementById('correct_answer_fc').style.display = 'block';
     document.getElementById('flip_button').style.display = 'none';
@@ -220,6 +221,7 @@ function flip() {
 }
 
 function reset_flip() {
+    disable_buttons();
     document.getElementById("question_result").style.display = 'block';
     setTimeout(function () {
         document.getElementById("question_result").style.display = 'none';
@@ -232,6 +234,18 @@ function reset_flip() {
         current_question = getWord();
         setWord(current_question);
     }, delay);
+}
+
+function disable_buttons() {
+    document.getElementById("good_button").disabled = true;
+    document.getElementById("half_good_button").disabled = true;
+    document.getElementById("wrong_button").disabled = true;
+}
+
+function enable_buttons() {
+    document.getElementById("good_button").disabled = false;
+    document.getElementById("half_good_button").disabled = false;
+    document.getElementById("wrong_button").disabled = false;
 }
 
 function good() {
