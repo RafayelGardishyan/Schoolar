@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <h2>{{ list.name }}</h2>
+    <br>
+    <h5>Question:</h5>
+    <h1 id="question">[[ current_quetion ]]</h1>
+    <h4 id="question_result"><span id="answer_indicator">[[ correct_indicator ]]</span></h4>
+    <div id="translate_mode">
+        <h2 id="wrong_answer">Correct answer: <i>[[ correct_answer ]]</i></h2>
+        <input v-model="input_answer" id="input_box" type="text" placeholder="Input text here" size="50"><br>
+        <button v-on:click="check_translation">Check</button>
+    </div>
+    <div id="flashcard_mode">
+        <h1>[[ correct_answer ]]</h1>
+        <button id="flip_button" v-on:click="flip" >Flip</button>
+        <div id="choose_menu">
+            <table>
+                <tr>
+                    <th><button id="good_button" v-on:click="fc_correct">Correct</button></th>
+                    <th><button id="half_good_button" v-on:click="fc_partly_correct">Almost correct</button></th>
+                    <th><button id="wrong_button" v-on:click="fc_wrong">Wrong</button></th>
+                </tr>
+            </table>
+        </div>
+    </div>
+    
+    <div id="progress_wrapper">
+	<span id="progressBarLabel">0%</span>
+    	<progress id="progressBar" min=0 max=100 value=0 ></progress>
+    </div>
+    
+    <script>
+    data = {};
+    questions = [
+      {% for question in questions %}
+        {
+            question: "{{ question.question|safe }}",
+            answer: "{{ question.answer|safe }}"
+        },
+      {% endfor %}
+
+    ];
+
+    data.questions = questions;
+
+    let csrf_token = '{{ csrf_token }}';
+
+    data.settings =  {{ settings|safe }};
+
+    {% if settings_theme == 0 %}
+        data.settings.text_color = '#000';
+    {% elif settings_theme == 1 %}
+        data.settings.text_color = '#bbb';
+    {% endif %}
+
+    </script>
+    <script src="{% static "js/test_module_vue.js" %}"></script>
+{% endblock %}
