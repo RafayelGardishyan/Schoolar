@@ -239,7 +239,7 @@ def test(request, list_id):
         'tts_lang': lang
     }
 
-    return render(request, 'app/test.html', generate_context(request, {
+    return render(request, 'app/test_vue.html', generate_context(request, {
         'questions': n_list.questions.all(),
         'list': n_list,
         'settings': json.dumps(settings)

@@ -237,3 +237,8 @@ progress::-webkit-progress-bar{
 	width: 100%;
 }
 
+#question_text {
+    margin-bottom: -20px;
+}
+
+

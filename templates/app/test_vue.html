@@ -1,64 +1,145 @@
 {% extends 'base.html' %}
 
-{% load static %}
-
 {% block content %}
+    <style>
+            #myProgress {
+              width: 100%;
+              background-color: #ddd;
+              display: none;
+            }
+            
+            #myBar {
+              width: 1%;
+              height: 30px;
+              background-color: #a7a7a7;
+            }
+    </style>
 
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
-    <h2>{{ list.name }}</h2>
-    <br>
-    <h5>Question:</h5>
-    <h1 id="question">[[ current_quetion ]]</h1>
-    <h4 id="question_result"><span id="answer_indicator">[[ correct_indicator ]]</span></h4>
-    <div id="translate_mode">
-        <h2 id="wrong_answer">Correct answer: <i>[[ correct_answer ]]</i></h2>
-        <input v-model="input_answer" id="input_box" type="text" placeholder="Input text here" size="50"><br>
-        <button v-on:click="check_translation">Check</button>
-    </div>
-    <div id="flashcard_mode">
-        <h1>[[ correct_answer ]]</h1>
-        <button id="flip_button" v-on:click="flip" >Flip</button>
-        <div id="choose_menu">
-            <table>
-                <tr>
-                    <th><button id="good_button" v-on:click="fc_correct">Correct</button></th>
-                    <th><button id="half_good_button" v-on:click="fc_partly_correct">Almost correct</button></th>
-                    <th><button id="wrong_button" v-on:click="fc_wrong">Wrong</button></th>
-                </tr>
-            </table>
+    <div id="app" v-on:keypress.enter.prevent="check_answer">
+        <h2>{{ list.name }}</h2>
+        <br>
+        <p>Questions left: [[ questions.length + stats.wrong_answers_count ]] (<span><i class="fas fa-check-circle"></i> [[ stats.correct_answers_count]]</span> | <span><i class="fas fa-times-circle"></i> [[ stats.wrong_answers_count ]]</span>)</p>
+        <h4 id="question_text">Question:</h4>
+        <h1>[[ current_question ]]</h1>
+        <h4><span v-bind:style="{ color: result_color }">[[ result ]]</span></h4>
+        <h6>[[ correct_answer ]]</h6>
+        <h4 style="display: none;">Correct answer: [[ current_answer ]]</h4>
+        <input type="text" v-model="input_answer" autofocus>
+        <div id="myProgress">
+            <div id="myBar"></div>
         </div>
+        <button v-on:click="check_answer">Check</button>
     </div>
-    
-    <div id="progress_wrapper">
-	<span id="progressBarLabel">0%</span>
-    	<progress id="progressBar" min=0 max=100 value=0 ></progress>
-    </div>
-    
+
     <script>
-    data = {};
-    questions = [
-      {% for question in questions %}
-        {
-            question: "{{ question.question|safe }}",
-            answer: "{{ question.answer|safe }}"
-        },
-      {% endfor %}
 
-    ];
+        let options = {
+            colors: {
+                green: "#007410",
+                red: "#7b0100",
+                yellow: "#be9914"
+            }
+        };
+        
+        let app = new Vue({
+            el: "#app",
+            delimiters: ["[[", "]]"],
+            data: {
+                stats: {
+                    correct_answers_count: 0,
+                    wrong_answers_count: 0,
+                    wrong_answers: []                    
+                },
+                questions: [
+                    {% for question in questions %}
+                        {
+                            question: "{{ question.question|safe }}",
+                            answer: "{{ question.answer|safe }}"
+                        },
+                    {% endfor %}
+                ],
+                current_question: "Question",
+                current_answer: "Answer",
+                input_answer: "",
+                result: "",
+                result_color: options.colors.green,
+                correct_answer: ""
+            },
+            methods : {
+                check_answer: function (event) {
+                    if (this.input_answer === this.current_answer) {
+                        this.stats.correct_answers_count++;
+                        this.result_color = options.colors.green
+                        this.result = "Correct!"
+                    } else {
+                        this.stats.wrong_answers_count++;
+                        this.questions.splice(2, 0, {
+                            question: this.current_question,
+                            answer: this.current_answer
+                        })
+                        this.stats.wrong_answers.push({
+                            question: this.current_question,
+                            answer: this.current_answer
+                        })
+                        this.result_color = options.colors.red
+                        this.result = "Wrong!"
+                        this.correct_answer = "Correct answer: " + this.current_answer
+                    }
+                    move_status_bar();
+                    this.input_answer = ""
+                }
+            },
+        });
 
-    data.questions = questions;
+        function shuffle(a) {
+            for (let i = a.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [a[i], a[j]] = [a[j], a[i]];
+            }
+            return a;
+        }
+        
+        app.questions = shuffle(app.questions)
 
-    let csrf_token = '{{ csrf_token }}';
+        function get_question (){
+            if (app.questions.length > 0){
+                current = app.questions.shift();
+                app.current_question = current.question
+                app.current_answer = current.answer
+            } else if (app.stats.wrong_answers.length > 0){
+                app.questions = [...app.stats.wrong_answers]
+                app.stats.wrong_answers = []
+            }
+        }
 
-    data.settings =  {{ settings|safe }};
+        function move_status_bar(){
+            let elem = document.getElementById("myBar")
+            document.getElementById("myProgress").style.display = "block"
+            let width = 1
+            let id = setInterval(frame, 1);
+            function frame() {
+                if (width >= 100) {
+                clearInterval(id)
+                } else {
+                width++; 
+                elem.style.width = width + '%';
+                }
+            }
+            setTimeout(function(){
+                document.getElementById("myProgress").style.display = "none"
+                if (app.questions.length + app.stats.wrong_answers.length === 0){
+                    window.location.reload()
+                } else {
+                    get_question()
+                }
+                app.result = ""
+                app.correct_answer = ""
+            }, 1000)
+        }
 
-    {% if settings_theme == 0 %}
-        data.settings.text_color = '#000';
-    {% elif settings_theme == 1 %}
-        data.settings.text_color = '#bbb';
-    {% endif %}
-
+        get_question();
     </script>
-    <script src="{% static "js/test_module_vue.js" %}"></script>
+
 {% endblock %}

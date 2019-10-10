@@ -243,3 +243,9 @@ progress::-webkit-progress-bar {
 #progressBar {
 	width: 100%;
 }
+
+#question_text {
+    margin-bottom: -20px;
+}
+
+
