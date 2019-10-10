@@ -35,12 +35,13 @@
 
     <script>
 
-        let options = {
+        let props = {
             colors: {
                 green: "#007410",
                 red: "#7b0100",
                 yellow: "#be9914"
-            }
+            },
+            settings: {{ settings|safe }}
         };
         
         let app = new Vue({
@@ -64,14 +65,18 @@
                 current_answer: "Answer",
                 input_answer: "",
                 result: "",
-                result_color: options.colors.green,
+                result_color: props.colors.green,
                 correct_answer: ""
             },
             methods : {
                 check_answer: function (event) {
+                    if (props.settings.case_sensitive === "no") {
+                        this.input_answer = this.input_answer.toLowerCase()
+                        this.current_answer = this.current_answer.toLowerCase()
+                    }
                     if (this.input_answer === this.current_answer) {
                         this.stats.correct_answers_count++;
-                        this.result_color = options.colors.green
+                        this.result_color = props.colors.green
                         this.result = "Correct!"
                     } else {
                         this.stats.wrong_answers_count++;
@@ -83,7 +88,7 @@
                             question: this.current_question,
                             answer: this.current_answer
                         })
-                        this.result_color = options.colors.red
+                        this.result_color = props.colors.red
                         this.result = "Wrong!"
                         this.correct_answer = "Correct answer: " + this.current_answer
                     }
@@ -103,6 +108,12 @@
         
         app.questions = shuffle(app.questions)
 
+        function get_lang_code() {
+            let codes = httpGet("/app/api/getlangcode");
+            codes = JSON.parse(codes);
+            return codes[props.settings.tts_lang];
+        }
+
         function get_question (){
             if (app.questions.length > 0){
                 current = app.questions.shift();
@@ -112,13 +123,22 @@
                 app.questions = [...app.stats.wrong_answers]
                 app.stats.wrong_answers = []
             }
+
+        }
+
+        function httpGet(theUrl)
+        {
+            var xmlHttp = new XMLHttpRequest();
+            xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
+            xmlHttp.send( null );
+            return xmlHttp.responseText;
         }
 
         function move_status_bar(){
             let elem = document.getElementById("myBar")
             document.getElementById("myProgress").style.display = "block"
             let width = 1
-            let id = setInterval(frame, 1);
+            let id = setInterval(frame, 1/props.settings.delay);
             function frame() {
                 if (width >= 100) {
                 clearInterval(id)
