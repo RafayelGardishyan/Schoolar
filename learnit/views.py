@@ -95,7 +95,7 @@ def register(request):
 
 
 def app_home(request):
-    results = TestResults.objects.filter(user=request.user)[:5]
+    results = TestResults.objects.filter(user=request.user)
     lists = []
     for result in results:
         if result.list not in lists:
