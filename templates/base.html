@@ -22,6 +22,9 @@
     {% endif %}
 
     <script src="{% static "js/main.js" %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js?load=true"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
           integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
@@ -34,27 +37,27 @@
         {% if settings_lang == 1 %}
         <nav>
             <li class="nav-item"><a href="javascript:go_home()">Home</a></li>
-            <li class="nav-item"><a href="javascript:processAjaxData(httpGet('/app/lists/'), '/app/lists/')">Lijsten</a></li>
+            <li class="nav-item"><a href="javascript:processAjaxData( '/app/lists/')">Lijsten</a></li>
             <li class="nav-item"><a href="#">Snel leren</a></li>
             {% if user.is_authenticated %}
-                <li class="nav-item"><a href="javascript:processAjaxData(httpGet('/user/profile/'), '/user/profile/')">Mijn profiel</a></li>
-                <li class="nav-item"><a href="javascript:processAjaxData(httpGet('/logout/'), '/logout/')">Uitloggen</a></li>
+                <li class="nav-item"><a href="javascript:processAjaxData('/user/profile/')">Mijn profiel</a></li>
+                <li class="nav-item"><a href="javascript:processAjaxData('/logout/')">Uitloggen</a></li>
             {% else %}
-                <li class="nav-item"><a href="javascript:processAjaxData(httpGet('/login/'), '/login/')">Inloggen</a></li>
-                <li class="nav-item"><a href="javascript:processAjaxData(httpGet('/register/'), '/register/')">Aanmelden</a></li>
+                <li class="nav-item"><a href="javascript:processAjaxData('/login/')">Inloggen</a></li>
+                <li class="nav-item"><a href="javascript:processAjaxData('/register/')">Aanmelden</a></li>
             {% endif %}
         </nav>
         {% else %}
         <nav>
             <li class="nav-item"><a href="javascript:go_home()">Home</a></li>
-            <li class="nav-item"><a href="javascript:processAjaxData(httpGet('/app/lists/'), '/app/lists/')">Lists</a></li>
+            <li class="nav-item"><a href="javascript:processAjaxData('/app/lists/')">Lists</a></li>
             <li class="nav-item"><a href="#">Quick learn</a></li>
             {% if user.is_authenticated %}
-                <li class="nav-item"><a href="javascript:processAjaxData(httpGet('/user/profile/'), '/user/profile/')">My profile</a></li>
-                <li class="nav-item"><a href="javascript:processAjaxData(httpGet('/logout/'), '/logout/')">Log out</a></li>
+                <li class="nav-item"><a href="javascript:processAjaxData('/user/profile/')">My profile</a></li>
+                <li class="nav-item"><a href="javascript:processAjaxData('/logout/')">Log out</a></li>
             {% else %}
-                <li class="nav-item"><a href="javascript:processAjaxData(httpGet('/login/'), '/login/')">Log in</a></li>
-                <li class="nav-item"><a href="javascript:processAjaxData(httpGet('/register/'), '/register/')">Register</a></li>
+                <li class="nav-item"><a href="javascript:processAjaxData('/login/')">Log in</a></li>
+                <li class="nav-item"><a href="javascript:processAjaxData('/register/')">Register</a></li>
             {% endif %}
         </nav>
         {% endif %}
@@ -66,7 +69,8 @@
 
     <script>
         function go_home() {
-            processAjaxData(httpGet("/app/home"), "/")
+            processAjaxData("/app/home")
+            window.location.reload()
         }
     </script>
 </div>

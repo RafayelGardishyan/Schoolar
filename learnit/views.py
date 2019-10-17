@@ -211,7 +211,7 @@ def test(request, list_id):
     except:
         return redirect('/app/lists')
 
-    if request.method != 'POST':
+    if not request.GET:
         return render(request, 'app/test_setup.html', generate_context(request, {
             'list': n_list
         }))
@@ -221,21 +221,21 @@ def test(request, list_id):
     else:
         lang = "dutch"
 
-    if request.POST["question_subject"] == "question":
+    if request.GET["question_subject"] == "question":
         if n_list.question_subject.tts_support:
             lang = n_list.question_subject.name.lower()
-    elif request.POST["question_subject"] == "answer":
+    elif request.GET["question_subject"] == "answer":
         if n_list.answer_subject.tts_support:
             lang = n_list.answer_subject.name.lower()
 
     print(lang)
 
     settings = {
-        'question_subject': request.POST["question_subject"],
-        'mode': request.POST["test_mode"],
-        'delay': float(request.POST["delay"])*1000,
-        'case_sensitive': request.POST['case_sensitive'],
-        'tts_enabled': request.POST['tts'],
+        'question_subject': request.GET["question_subject"],
+        'mode': request.GET["test_mode"],
+        'delay': float(request.GET["delay"])*1000,
+        'case_sensitive': request.GET['case_sensitive'],
+        'tts_enabled': request.GET['tts'],
         'tts_lang': lang
     }
 

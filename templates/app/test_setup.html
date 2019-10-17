@@ -3,8 +3,7 @@
 {% block content %}
 
     <h2>Test setup: {{ list.name }}</h2>
-    <form method="post" action="">
-        {% csrf_token %}
+    <form method="get" action="" id="form">
         <table id="test_form">
             <tr>
                 <td>Question subject:</td>
@@ -53,5 +52,9 @@
         </table>
         <input type="submit" value="Start">
     </form>
+
+    <script>
+
+    </script>
 
 {% endblock %}

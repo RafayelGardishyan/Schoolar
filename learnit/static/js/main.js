@@ -1,6 +1,6 @@
- function processAjaxData(response, urlPath, title){
-     document.getElementById("html").innerHTML = response;
-     window.history.pushState({"html":response.html,"pageTitle":"Learn It"},"", urlPath);
+ function processAjaxData(urlPath){
+     document.getElementById("html").innerHTML = httpGet(urlPath);
+     window.history.pushState({"html":httpGet(urlPath),"pageTitle":"Learn It"},"", urlPath);
  }
 
  window.onpopstate = function(e){
