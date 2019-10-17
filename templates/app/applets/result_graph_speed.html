@@ -1,0 +1,94 @@
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+    google.charts.load('current', {'packages': ['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+
+
+    function parse_time(time) {
+        let hour = time.slice(0, 2)
+        let minute = time.slice(3, 5)
+
+        return [hour, minute]
+    }
+
+    function delta_time(time1, time2) {
+        return Math.abs(time1[0] - time2[0]) * 60 + Math.abs(time1[1] - time2[1])
+    }
+
+    function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+            {% if settings_lang == 0 %}
+                ['ID', 'Speed'],
+            {% elif settings_lang == 1 %}
+                ['ID', 'Snelheid'],
+            {% endif %}
+            {% for result in results %}
+                [{{result.pk}}, {{ result.get_time_difference}} / {{ result.total_question_amount }}],
+            {% endfor %}
+
+        ]);
+
+        {% if settings_theme == 0 %}
+            var options = {
+                {% if settings_lang == 0 %}
+                    title: 'Your speed',
+                {% elif settings_lang == 1 %}
+                    title: 'Je snelheid',
+                {% endif %}
+                curveType: 'function',
+                legend: {
+                    position: 'bottom',
+                    textStyle: {
+                        color: "#000000"
+                    }
+                },
+                backgroundColor: {
+                    fill: "#eeeeee"
+                },
+                hAxis: {
+                    textStyle: {color: '#000000'}
+                },
+                vAxis: {
+                    textStyle: {color: '#000000'}
+                },
+                titleTextStyle: {
+                    color: "#000000"
+                },
+                width: 750,
+                height: 500
+            };
+        {% elif settings_theme == 1 %}
+            var options = {
+                {% if settings_lang == 0 %}
+                    title: 'Your speed',
+                {% elif settings_lang == 1 %}
+                    title: 'Je snelheid',
+                {% endif %}
+                curveType: 'function',
+                legend: {
+                    position: 'bottom',
+                    textStyle: {
+                        color: "#FFFFFF"
+                    }
+                },
+                backgroundColor: {
+                    fill: "#333333"
+                },
+                hAxis: {
+                    textStyle: {color: '#FFF'}
+                },
+                vAxis: {
+                    textStyle: {color: '#FFF'}
+                },
+                titleTextStyle: {
+                    color: "FFFFFF"
+                }
+            };
+        {% endif %}
+
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart_speed'));
+
+        chart.draw(data, options);
+    }
+</script>
+<div id="curve_chart_speed" style="width: 900px; height: 500px"></div>

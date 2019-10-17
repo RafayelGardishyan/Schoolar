@@ -1,6 +1,7 @@
  function processAjaxData(urlPath){
-     document.getElementById("html").innerHTML = httpGet(urlPath);
-     window.history.pushState({"html":httpGet(urlPath),"pageTitle":"Learn It"},"", urlPath);
+    window.location.href = urlPath
+     // document.getElementById("html").innerHTML = httpGet(urlPath);
+     // window.history.pushState({"html":httpGet(urlPath),"pageTitle":"Learn It"},"", urlPath);
  }
 
  window.onpopstate = function(e){

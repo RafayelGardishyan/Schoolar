@@ -1,3 +1,5 @@
+import datetime
+
 from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
@@ -54,6 +56,14 @@ class TestResults(models.Model):
 
     def get_difficult_words_count(self):
         return self.difficult_questions.all().count()
+
+    def get_time_difference(self):
+        dateTimeA = datetime.datetime.combine(datetime.date.today(), self.end_time)
+        dateTimeB = datetime.datetime.combine(datetime.date.today(), self.start_time)
+        # Get the difference between datetimes (as timedelta)
+        dateTimeDifference = dateTimeA - dateTimeB
+        # Divide difference in seconds by number of seconds in hour (3600)
+        return dateTimeDifference.total_seconds()
 
 
 class Settings(models.Model):

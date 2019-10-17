@@ -239,7 +239,7 @@ def test(request, list_id):
         'tts_lang': lang
     }
 
-    return render(request, 'app/test_vue.html', generate_context(request, {
+    return render(request, 'app/test_translate.html', generate_context(request, {
         'questions': n_list.questions.all(),
         'list': n_list,
         'settings': json.dumps(settings)
@@ -271,8 +271,8 @@ def register_results(request):
     result.grade = float(stats["averageScore"])
     result.initial_question_amount = stats["initialQuestionAmount"]
     result.total_question_amount = stats["totalQuestionAmount"]
-    result.difficult_questions_amount = stats["difficultWordsAmount"]
-    result.correct_answers = stats["goodAnswers"]
+    result.difficult_questions_amount = stats["difficultQuestionAmount"]
+    result.correct_answers = stats["correctAnswers"]
     result.wrong_answers = stats["wrongAnswers"]
     result.start_time = datetime.time(stats["startTime"][0], stats["startTime"][1], stats["startTime"][2])
     result.end_time = datetime.time(stats["endTime"][0], stats["endTime"][1], stats["endTime"][2])

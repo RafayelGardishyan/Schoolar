@@ -64,11 +64,46 @@
 <td>{{ user.email }}</td>
 </tr>
 </table>
-<h3>Statistieken</h3>
+<h3>Statistiek</h3>
 {% endif %}
 
 <div id="results">
-{% include "app/applets/result_graph_grade.html" %}
-{% include "app/applets/result_graph_difficult_q.html" %}
+<div class="tab">
+  <button class="tablinks" onclick="openTab(event, 'grades')">Grades</button>
+  <button class="tablinks" onclick="openTab(event, 'speed')">Speed</button>
+  <button class="tablinks" onclick="openTab(event, 'difficult_q')">Difficult Questions</button>
 </div>
+
+<div id="grades" class="tabcontent">
+    {% include "app/applets/result_graph_grade.html" %}
+</div>
+
+<div id="speed" class="tabcontent">
+    {% include "app/applets/result_graph_speed.html" %}
+</div>
+
+<div id="difficult_q" class="tabcontent">
+    {% include "app/applets/result_graph_difficult_q.html" %}
+</div>
+
+</div>
+
+<script>
+    function openTab(evt, tabTitle) {
+      var i, tabcontent, tablinks;
+      tabcontent = document.getElementsByClassName("tabcontent");
+      for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+      }
+      tablinks = document.getElementsByClassName("tablinks");
+      for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+      }
+      document.getElementById(tabTitle).style.display = "block";
+      evt.currentTarget.className += " active";
+    }
+
+    openTab(null, 'grades')
+</script>
+
 {% endblock %}

@@ -33,6 +33,8 @@
     </div>
 
     <script>
+        let csrf_token = '{{ csrf_token }}';
+        let d = new Date()
 
         let props = {
             colors: {
@@ -43,7 +45,6 @@
             settings: {{ settings|safe }},
             datetime: {
                 startTime: [d.getHours(), d.getMinutes(), d.getSeconds()],
-                endTime: []
             }
         };
         
@@ -55,7 +56,8 @@
                     correct_answers_count: 0,
                     wrong_answers_count: 0,
                     wrong_answers: [],
-                    average_score: 10
+                    average_score: 10,
+                    difficult_questions: []
                 },
                 questions: [
                     {% for question in questions %}
@@ -83,15 +85,19 @@
                         this.result_color = props.colors.green
                         this.result = "Correct!"
                     } else {
+                        let to_add = {
+                            question: this.current_question,
+                            answer: this.current_answer
+                        }
+
                         this.stats.wrong_answers_count++;
-                        this.questions.splice(2, 0, {
-                            question: this.current_question,
-                            answer: this.current_answer
-                        })
-                        this.stats.wrong_answers.push({
-                            question: this.current_question,
-                            answer: this.current_answer
-                        })
+                        this.questions.splice(2, 0, to_add)
+                        this.stats.wrong_answers.push(to_add)
+
+                        if (!(to_add in this.stats.difficult_questions)){
+                            this.stats.difficult_questions.push(to_add)
+                        }
+
                         this.result_color = props.colors.red
                         this.result = "Wrong!"
                         this.correct_answer = "Correct answer: " + this.current_answer
@@ -171,13 +177,51 @@
             setTimeout(function(){
                 document.getElementById("myProgress").style.display = "none"
                 if (app.questions.length + app.stats.wrong_answers.length === 0){
-                    window.location.reload()
+                    d = new Date()
+                    post("/app/test/register/", {
+                        'stats': JSON.stringify({
+                            averageScore: app.stats.average_score,
+                            initialQuestionAmount: {{ questions.count }},
+                            totalQuestionAmount: app.stats.correct_answers_count + app.stats.wrong_answers_count,
+                            difficultQuestionAmount: app.stats.difficult_questions.length,
+                            correctAnswers: app.stats.correct_answers_count,
+                            wrongAnswers: app.stats.wrong_answers_count,
+                            startTime: props.datetime.startTime,
+                            endTime: [d.getHours(), d.getMinutes(), d.getSeconds()]
+
+                        }),
+                        "difficult_words": JSON.stringify(app.stats.difficult_questions),
+                        "csrfmiddlewaretoken": csrf_token
+                    });
                 } else {
                     get_question()
                 }
                 app.result = ""
                 app.correct_answer = ""
             }, 1000)
+        }
+
+
+        function post(path, params) {
+            let method = "post";
+
+            let form = document.createElement("form");
+            form.setAttribute("method", method);
+            form.setAttribute("action", path);
+
+            for (let key in params) {
+                if (params.hasOwnProperty(key)) {
+                    let hiddenField = document.createElement("input");
+                    hiddenField.setAttribute("type", "hidden");
+                    hiddenField.setAttribute("name", key);
+                    hiddenField.setAttribute("value", params[key]);
+
+                    form.appendChild(hiddenField);
+                }
+            }
+
+            document.body.appendChild(form);
+            form.submit();
         }
 
         get_question();
