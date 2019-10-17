@@ -18,7 +18,8 @@
     <div id="app" v-on:keypress.enter.prevent="check_answer">
         <h2>{{ list.name }}</h2>
         <br>
-        <p>Questions left: [[ questions.length + stats.wrong_answers_count ]] (<span><i class="fas fa-check-circle"></i> [[ stats.correct_answers_count]]</span> | <span><i class="fas fa-times-circle"></i> [[ stats.wrong_answers_count ]]</span>)</p>
+        <p>Questions left: [[ questions.length + stats.wrong_answers.length ]] (<span><i class="fas fa-check-circle"></i> [[ stats.correct_answers_count]]</span> | <span><i class="fas fa-times-circle"></i> [[ stats.wrong_answers_count ]]</span>)<br>
+        <span>Score: [[ stats.average_score ]]</span></p>
         <h4 id="question_text">Question:</h4>
         <h1>[[ current_question ]]</h1>
         <h4><span v-bind:style="{ color: result_color }">[[ result ]]</span></h4>
@@ -39,7 +40,11 @@
                 red: "#7b0100",
                 yellow: "#be9914"
             },
-            settings: {{ settings|safe }}
+            settings: {{ settings|safe }},
+            datetime: {
+                startTime: [d.getHours(), d.getMinutes(), d.getSeconds()],
+                endTime: []
+            }
         };
         
         let app = new Vue({
@@ -49,7 +54,8 @@
                 stats: {
                     correct_answers_count: 0,
                     wrong_answers_count: 0,
-                    wrong_answers: []                    
+                    wrong_answers: [],
+                    average_score: 10
                 },
                 questions: [
                     {% for question in questions %}
@@ -90,6 +96,9 @@
                         this.result = "Wrong!"
                         this.correct_answer = "Correct answer: " + this.current_answer
                     }
+
+                        this.stats.average_score = parseFloat((10 / (this.stats.correct_answers_count + this.stats.wrong_answers_count) * this.stats.correct_answers_count).toFixed(2));
+
                     move_status_bar();
                     this.input_answer = ""
                 }
