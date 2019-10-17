@@ -120,14 +120,6 @@ function setWord(word) {
 
 }
 
-function httpGet(theUrl)
-{
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
-    xmlHttp.send( null );
-    return xmlHttp.responseText;
-}
-
 function get_lang_code() {
     let codes = httpGet("/app/api/getlangcode");
     codes = JSON.parse(codes);

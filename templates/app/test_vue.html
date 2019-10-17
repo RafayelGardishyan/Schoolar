@@ -124,6 +124,20 @@
                 app.stats.wrong_answers = []
             }
 
+            if ('speechSynthesis' in window && props.settings.tts_enabled === "yes") {
+                let msg;
+                if (props.settings.question_subject === "question") {
+                    msg = new SpeechSynthesisUtterance(app.current_question);
+                } else {
+                    msg = new SpeechSynthesisUtterance(app.current_answer);
+                }
+                msg.lang = get_lang_code();
+                window.speechSynthesis.speak(msg);
+            }
+
+
+
+
         }
 
         function httpGet(theUrl)

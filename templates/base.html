@@ -1,7 +1,7 @@
 {% load static %}
 
 <!doctype html>
-<html lang="nl">
+<html id="html" lang="nl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -15,45 +15,46 @@
         <title>Learn IT</title>
     {% endif %}
 
-    {% if settings_theme == 0 %}
-        <link rel="stylesheet" href="{% static "css/style_light.css" %}">
-    {% elif settings_theme == 1 %}
+{#    {% if settings_theme == 0 %}#}
+    <link rel="stylesheet" href="{% static "css/style_light.css" %}">
+    {% if settings_theme == 1 %}
         <link rel="stylesheet" href="{% static "css/style_dark.css" %}">
-    {% else %}
-        <link rel="stylesheet" href="{% static "css/style_light.css" %}">
     {% endif %}
+
+    <script src="{% static "js/main.js" %}"></script>
+
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
           integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 </head>
 <body>
 <div class="wrapper">
     <div class="header">
-        <h1 id="title">Learn It</h1>
+        <h1 onclick="go_home()" id="title">Learn It</h1>
 
         {% if settings_lang == 1 %}
         <nav>
-            <li class="nav-item"><a href="/">Home</a></li>
-            <li class="nav-item"><a href="/app/lists">Lijsten</a></li>
+            <li class="nav-item"><a href="javascript:go_home()">Home</a></li>
+            <li class="nav-item"><a href="javascript:processAjaxData(httpGet('/app/lists/'), '/app/lists/')">Lijsten</a></li>
             <li class="nav-item"><a href="#">Snel leren</a></li>
             {% if user.is_authenticated %}
-                <li class="nav-item"><a href="/user/profile">Mijn profiel</a></li>
-                <li class="nav-item"><a href="/logout">Uitloggen</a></li>
+                <li class="nav-item"><a href="javascript:processAjaxData(httpGet('/user/profile/'), '/user/profile/')">Mijn profiel</a></li>
+                <li class="nav-item"><a href="javascript:processAjaxData(httpGet('/logout/'), '/logout/')">Uitloggen</a></li>
             {% else %}
-                <li class="nav-item"><a href="/login">Aanmelden</a></li>
-                <li class="nav-item"><a href="/register">Registreren</a></li>
+                <li class="nav-item"><a href="javascript:processAjaxData(httpGet('/login/'), '/login/')">Inloggen</a></li>
+                <li class="nav-item"><a href="javascript:processAjaxData(httpGet('/register/'), '/register/')">Aanmelden</a></li>
             {% endif %}
         </nav>
         {% else %}
         <nav>
-            <li class="nav-item"><a href="/">Home</a></li>
-            <li class="nav-item"><a href="/app/lists">Lists</a></li>
-            <li class="nav-item"><a href="#">Quick Learn</a></li>
+            <li class="nav-item"><a href="javascript:go_home()">Home</a></li>
+            <li class="nav-item"><a href="javascript:processAjaxData(httpGet('/app/lists/'), '/app/lists/')">Lists</a></li>
+            <li class="nav-item"><a href="#">Quick learn</a></li>
             {% if user.is_authenticated %}
-                <li class="nav-item"><a href="/user/profile">My Profile</a></li>
-                <li class="nav-item"><a href="/logout">Log Out</a></li>
+                <li class="nav-item"><a href="javascript:processAjaxData(httpGet('/user/profile/'), '/user/profile/')">My profile</a></li>
+                <li class="nav-item"><a href="javascript:processAjaxData(httpGet('/logout/'), '/logout/')">Log out</a></li>
             {% else %}
-                <li class="nav-item"><a href="/login">Log In</a></li>
-                <li class="nav-item"><a href="/register">Register</a></li>
+                <li class="nav-item"><a href="javascript:processAjaxData(httpGet('/login/'), '/login/')">Log in</a></li>
+                <li class="nav-item"><a href="javascript:processAjaxData(httpGet('/register/'), '/register/')">Register</a></li>
             {% endif %}
         </nav>
         {% endif %}
@@ -62,6 +63,12 @@
         {% block content %}
         {% endblock %}
     </div>
+
+    <script>
+        function go_home() {
+            processAjaxData(httpGet("/app/home"), "/")
+        }
+    </script>
 </div>
 </body>
 </html>
