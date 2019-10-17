@@ -368,3 +368,16 @@ def add_folder(request):
         return redirect("/app/lists")
 
     return render(request, "app/add_folder.html", generate_context(request, {}))
+
+
+def delete_folder(request, folder_id):
+    if not request.user.is_authenticated:
+        return redirect("/login")
+
+    folder = Folder.objects.get(pk=folder_id)
+    if folder.owner == request.user:
+        folder.delete()
+
+    return redirect("/app/lists")
+
+    return None

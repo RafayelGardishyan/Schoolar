@@ -11,6 +11,7 @@ urlpatterns = [
     path('app/lists/', views.lists, name='lists'),
     path('app/test/<int:list_id>', views.test, name='test'),
     path('app/delete/<int:list_id>', views.delete, name='test'),
+    path('app/delete/folder/<int:folder_id>', views.delete_folder, name='delete_dolder'),
     path('app/test/register/', views.register_results, name='register_results'),
     path('app/result/<int:result_id>', views.results, name='results_page'),
     path('user/profile/', views.profile, name='user_profile'),
