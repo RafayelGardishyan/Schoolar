@@ -52,7 +52,7 @@ class TestResults(models.Model):
     difficult_questions = models.ManyToManyField(to=Question)
     start_time = models.TimeField(default=timezone.now)
     end_time = models.TimeField(default=timezone.now)
-    # list = models.ForeignKey(to=List, on_delete=models.CASCADE, default=List.objects.get())
+    list = models.ForeignKey(to=List, on_delete=models.CASCADE, default=List.objects.all()[0].pk)
 
     def get_difficult_words_count(self):
         return self.difficult_questions.all().count()

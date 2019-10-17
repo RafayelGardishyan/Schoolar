@@ -95,8 +95,15 @@ def register(request):
 
 
 def app_home(request):
+    results = TestResults.objects.filter(user=request.user)[:5]
+    lists = []
+    for result in results:
+        if result.list not in lists:
+            lists.append(result.list)
+
     return render(request, "app/index.html", generate_context(request, {
-        'username': request.user.username
+        'username': request.user.username,
+        'lists': lists
     }))
 
 
@@ -239,6 +246,8 @@ def test(request, list_id):
         'tts_lang': lang
     }
 
+    request.session["current_list"] = n_list.pk
+
     return render(request, 'app/test_translate.html', generate_context(request, {
         'questions': n_list.questions.all(),
         'list': n_list,
@@ -276,6 +285,7 @@ def register_results(request):
     result.wrong_answers = stats["wrongAnswers"]
     result.start_time = datetime.time(stats["startTime"][0], stats["startTime"][1], stats["startTime"][2])
     result.end_time = datetime.time(stats["endTime"][0], stats["endTime"][1], stats["endTime"][2])
+    result.list = List.objects.get(pk=request.session["current_list"])
 
     result.save()
 

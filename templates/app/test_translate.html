@@ -165,12 +165,12 @@
             let elem = document.getElementById("myBar")
             document.getElementById("myProgress").style.display = "block"
             let width = 1
-            let id = setInterval(frame, 1/props.settings.delay);
+            let id = setInterval(frame, props.settings.delay/100);
             function frame() {
                 if (width >= 100) {
                 clearInterval(id)
                 } else {
-                width++; 
+                width += 1;
                 elem.style.width = width + '%';
                 }
             }
@@ -198,7 +198,7 @@
                 }
                 app.result = ""
                 app.correct_answer = ""
-            }, 1000)
+            }, props.settings.delay)
         }
 
 
