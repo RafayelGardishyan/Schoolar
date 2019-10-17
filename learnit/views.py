@@ -103,7 +103,7 @@ def app_home(request):
 
     return render(request, "app/index.html", generate_context(request, {
         'username': request.user.username,
-        'lists': lists
+        'lists': lists[:3]
     }))
 
 
