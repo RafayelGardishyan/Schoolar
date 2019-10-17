@@ -1,0 +1,33 @@
+{% if folders %}
+    <table>
+        {% if settings_lang == 0 %}
+            <tr id="table_header">
+                <td>Name</td>
+                <td>Content of the folder</td>
+                <td>Created on</td>
+                {% elif settings_lang == 1 %}
+            <tr id="table_header">
+            <td>Naam</td>
+            <td>Inhoud van het map</td>
+            <td>Gemaakt op</td>
+        {% endif %}
+        <td></td>
+        <td></td>
+        <td></td>
+        </tr>
+        {% for folder in folders reversed %}
+            <tr>
+                <td>{{ folder.name }}</td>
+                <td>{{ folder.content }} {% if settings_lang == 0 %}lists{% elif settings_lang == 1 %}
+                    lijsten{% endif %}</td>
+                <td>{{ folder.created_on }}</td>
+                <td><a class="delete_list" href="/app/delete/folder/{{ folder.get_id }}"><i
+                        class="fas fa-trash"></i></a>
+                </td>
+                <td><a href="/app/folder/add"><i class="fas fa-plus"></i></a></td>
+                <td><a class="test_list" href="/app/view/folder/{{ folder.id }}"><i class="fas fa-eye"></i></a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endif %}

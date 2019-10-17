@@ -7,12 +7,12 @@ from django.core.mail import send_mail
 from django.http import BadHeaderError, JsonResponse
 from django.shortcuts import render, redirect
 from django.template.loader import get_template
-from django.utils import timezone
+from django.utils import translation
 
 from .forms import UserForm
 from .models import Subject, \
     List, Question, TestResults, \
-    Settings
+    Settings, Folder
 
 
 def BinarySearch(lys, val):
@@ -25,6 +25,12 @@ def BinarySearch(lys, val):
 def generate_context(request, context):
     if request.user.is_authenticated:
         settings = Settings.objects.get(user=request.user)
+        if settings.interface_language == 0:
+            user_language = "en"
+        else:
+            user_language = "nl"
+        translation.activate(user_language)
+        request.session[translation.LANGUAGE_SESSION_KEY] = user_language
         context['settings_theme'] = settings.interface_theme
         context['settings_lang'] = settings.interface_language
 
@@ -206,8 +212,10 @@ def lists(request):
         return redirect('/login')
 
     n_lists = List.objects.filter(owner=request.user)
+    n_folders = Folder.objects.filter(owner=request.user)
     return render(request, 'app/lists.html', generate_context(request, {
         'lists': n_lists,
+        'folders': n_folders,
         'username': request.user.username
     }))
 
@@ -240,7 +248,7 @@ def test(request, list_id):
     settings = {
         'question_subject': request.GET["question_subject"],
         'mode': request.GET["test_mode"],
-        'delay': float(request.GET["delay"])*1000,
+        'delay': float(request.GET["delay"]) * 1000,
         'case_sensitive': request.GET['case_sensitive'],
         'tts_enabled': request.GET['tts'],
         'tts_lang': lang
@@ -299,7 +307,6 @@ def register_results(request):
             result.difficult_questions.add(
                 Question.objects.filter(question=question["question"], answer=question["answer"])[0])
 
-
     result.save()
 
     return redirect('/app/result/' + str(result.pk))
@@ -347,3 +354,17 @@ def edit_profile(request):
         return redirect('/user/profile')
 
     return render(request, 'registration/edit_profile.html', generate_context(request, {'user': request.user}))
+
+
+def add_folder(request):
+    if not request.user.is_authenticated:
+        return redirect("/login")
+
+    if request.method == "POST":
+        folder = Folder()
+        folder.owner = request.user
+        folder.name = request.POST["name"]
+        folder.save()
+        return redirect("/app/lists")
+
+    return render(request, "app/add_folder.html", generate_context(request, {}))

@@ -1,0 +1,19 @@
+{% load static %}
+<html>
+<head>
+    <link rel="stylesheet" href="{% static 'css/style_light.css' %}">
+</head>
+{% block content %}
+    <div class="modal_container">
+    <h2>{% if settings_lang == 0 %}Create a new folder{% elif settings_lang == 1 %}Maak een nieuwe map{% endif %}</h2>
+        <br>
+    <form action="/app/add/folder" method="post">
+        {% csrf_token %}
+        <label for="name">{% if settings_lang == 0 %}Name{% elif settings_lang == 1 %}Naam{% endif %}</label>
+        <input type="text" name="name" placeholder="{% if settings_lang == 0 %}Name{% elif settings_lang == 1 %}Naam{% endif %}">
+        <input type="submit" value="{% if settings_lang == 0 %}Submit{% elif settings_lang == 1 %}Voltooi{% endif %}">
+    </form>
+    </div>
+
+{% endblock %}
+</html>

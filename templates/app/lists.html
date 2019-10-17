@@ -1,51 +1,72 @@
 {% extends 'base.html' %}
 
-{% block title %}Login{% endblock %}
-
 {% block content %}
     {% if settings_lang == 0 %}
-    <h2>My lists</h2>
-    <h4><a class="link_button" href="/app/add">Add a list &nbsp;&nbsp;&nbsp;&nbsp;<i class="fas fa-plus"></i></a></h4>
+        <h2><i class="fas fa-list-ul"></i>&nbsp; My lists</h2>
+        <h4><a class="link_button" href="/app/add">Add a list &nbsp;&nbsp;&nbsp;&nbsp;<i class="fas fa-plus"></i></a>
+        </h4>
     {% elif settings_lang == 1 %}
-    <h2>Mijn lijsten</h2>
-    <h4><a class="link_button" href="/app/add">Lijst toevoegen &nbsp;&nbsp;&nbsp;&nbsp;<i class="fas fa-plus"></i></a></h4>
+        <h2><i class="fas fa-list-ul"></i>&nbsp; Mijn lijsten</h2>
+        <h4><a class="link_button" href="/app/add">Lijst toevoegen &nbsp;&nbsp;&nbsp;&nbsp;<i
+                class="fas fa-plus"></i></a></h4>
     {% endif %}
 
-    {% if lists %}
-        <table>
-            {% if settings_lang == 0 %}
-                <tr id="table_header">
-                    <td>Name</td>
-                    <td>Question Subject</td>
-                    <td>Answer Subject</td>
-            {% elif settings_lang == 1 %}
-                <tr id="table_header">
-                    <td>Naam</td>
-                    <td>Vraag Onderwerp</td>
-                    <td>Antwoord Onderwerp</td>
-            {% endif %}
-            <td></td>
-            <td></td>
-            <td></td>
-            </tr>
-            {% for list in lists %}
-                <tr>
-                    <td>{{ list.name }}</td>
-                    {% if settings_lang == 0 %}
-                    <td>{{ list.question_subject.name }}</td>
-                    <td>{{ list.answer_subject.name }}</td>
-                    {% elif settings_lang == 1 %}
-                        <td>{{ list.question_subject.name_dutch }}</td>
-                    <td>{{ list.answer_subject.name_dutch }}</td>
-                    {% endif %}
-                    <td><a class="delete_list" href="/app/delete/{{ list.get_test }}"><i class="fas fa-trash"></i></a>
-                    </td>
-                    <td><a class="test_list" href="/app/test/{{ list.get_test }}"><i class="far fa-play-circle"></i></a>
-                    </td>
-                    <td><a class="test_list" href="{{ list.get_edit_url }}"><i class="fas fa-pencil-alt"></i></a>
-                    </td>
-                </tr>
-            {% endfor %}
-        </table>
+    {% include 'app/applets/display_list_menu.html' %}
+
+    {% if settings_lang == 0 %}
+        <h2><i class="fas fa-folder"></i>&nbsp; My folders</h2>
+        <h4><a class="link_button" href="javascript:open_modal()">Create a folder &nbsp;&nbsp;&nbsp;&nbsp;<i
+                class="fas fa-plus"></i></a></h4>
+    {% elif settings_lang == 1 %}
+        <h2><i class="fas fa-folder"></i>&nbsp; Mijn mappen</h2>
+        <h4><a class="link_button" href="javascript:open_modal()">Een map maken &nbsp;&nbsp;&nbsp;&nbsp;<i
+                class="fas fa-plus"></i></a></h4>
     {% endif %}
+
+
+    <div id="modal_folder" class="modal">
+
+      <!-- Modal content -->
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <div id="modal-inner"></div>
+      </div>
+
+    </div>
+
+    <script>
+    // Get the modal
+    let modal = document.getElementById("modal_folder");
+
+    // Get the button that opens the modal
+    let btn = document.getElementById("myBtn");
+
+    // Get the <span> element that closes the modal
+    let span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks the button, open the modal
+    function open_modal () {
+      modal.style.display = "block";
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+      modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
+
+    let add_folder_page = httpGet("/app/add/folder")
+
+    document.getElementById("modal-inner").innerHTML = add_folder_page
+
+    </script>
+
+    {% include 'app/applets/display_folder_menu.html' %}
+
 {% endblock %}

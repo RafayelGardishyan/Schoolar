@@ -71,3 +71,12 @@ class Settings(models.Model):
     interface_theme = models.IntegerField(default=0)
     interface_language = models.IntegerField(default=0)
 
+
+class Folder(models.Model):
+    owner = models.ForeignKey(to=User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=255)
+    created_on = models.DateField(auto_created=True, auto_now=True)
+    lists = models.ManyToManyField(List)
+
+    def content(self):
+        return self.lists.count()

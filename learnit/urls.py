@@ -6,6 +6,7 @@ urlpatterns = [
     path('', views.index, name='home'),
     path('app/home/', views.app_home, name='app_home'),
     path('app/add/', views.add_list, name='add_list'),
+    path('app/add/folder', views.add_folder, name='add_folder'),
     path('app/edit/<int:list>', views.edit_list, name='edit_list'),
     path('app/lists/', views.lists, name='lists'),
     path('app/test/<int:list_id>', views.test, name='test'),
