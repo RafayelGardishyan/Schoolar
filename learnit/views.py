@@ -210,7 +210,7 @@ def lists(request):
     if not request.user.is_authenticated:
         return redirect('/login')
 
-    n_lists = List.objects.filter(owner=request.user)
+    n_lists = List.objects.filter(owner=request.user).exclude(name__contains="QuickLearn")
     n_folders = Folder.objects.filter(owner=request.user)
     return render(request, 'app/lists.html', generate_context(request, {
         'lists': n_lists,
@@ -413,7 +413,7 @@ def add_to_folder(request, folder_id):
     for item in Folder.objects.get(pk=folder_id).lists.all():
         ids.append(item.pk)
 
-    lists = List.objects.filter(owner=request.user).exclude(id__in=ids)
+    lists = List.objects.filter(owner=request.user).exclude(id__in=ids).exclude(name__contains="QuickLearn")
 
 
     form = ListAddForm()

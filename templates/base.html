@@ -15,7 +15,7 @@
         <title>Learn IT</title>
     {% endif %}
 
-{#    {% if settings_theme == 0 %}#}
+    {#    {% if settings_theme == 0 %}#}
     <link rel="stylesheet" href="{% static "css/style_light.css" %}">
     {% if settings_theme == 1 %}
         <link rel="stylesheet" href="{% static "css/style_dark.css" %}">
@@ -23,7 +23,8 @@
 
     <script src="{% static "js/main.js" %}"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js?load=true"></script>
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
@@ -35,31 +36,36 @@
         <h1 onclick="go_home()" id="title">Learn It</h1>
 
         {% if settings_lang == 1 %}
-        <nav>
-            <li class="nav-item"><a href="javascript:go_home()">Home</a></li>
-            <li class="nav-item"><a href="javascript:processAjaxData( '/app/lists/')">Lijsten</a></li>
-            <li class="nav-item"><a href="javascript:processAjaxData('/app/experimental/quick_learn')">Snel leren</a></li>
-            {% if user.is_authenticated %}
-                <li class="nav-item"><a href="javascript:processAjaxData('/user/profile/')">Mijn profiel</a></li>
-                <li class="nav-item"><a href="javascript:processAjaxData('/logout/')">Uitloggen</a></li>
-            {% else %}
-                <li class="nav-item"><a href="javascript:processAjaxData('/login/')">Inloggen</a></li>
-                <li class="nav-item"><a href="javascript:processAjaxData('/register/')">Aanmelden</a></li>
-            {% endif %}
-        </nav>
+            <nav>
+                <li class="nav-item"><a href="javascript:go_home()">Home</a></li>
+                <li class="nav-item"><a href="javascript:processAjaxData( '/app/lists/')">Lijsten</a></li>
+                <li class="nav-item"><a href="javascript:processAjaxData('/app/experimental/quick_learn')">Snel
+                    leren</a></li>
+                <li class="nav-item"><a href="#">WIKI Lijsten</a></li>
+                {% if user.is_authenticated %}
+                    <li class="nav-item"><a href="javascript:processAjaxData('/user/profile/')">Mijn profiel</a></li>
+                    <li class="nav-item"><a href="javascript:processAjaxData('/logout/')">Uitloggen</a></li>
+                {% else %}
+                    <li class="nav-item"><a href="javascript:processAjaxData('/login/')">Inloggen</a></li>
+                    <li class="nav-item"><a href="javascript:processAjaxData('/register/')">Aanmelden</a></li>
+                {% endif %}
+            </nav>
         {% else %}
-        <nav>
-            <li class="nav-item"><a href="javascript:go_home()">Home</a></li>
-            <li class="nav-item"><a href="javascript:processAjaxData('/app/lists/')">Lists</a></li>
-            <li class="nav-item"><a href="javascript:processAjaxData('/app/experimental/quick_learn')">Quick learn</a></li>
-            {% if user.is_authenticated %}
-                <li class="nav-item"><a href="javascript:processAjaxData('/user/profile/')">My profile</a></li>
-                <li class="nav-item logout"><a class="logout" href="javascript:processAjaxData('/logout/')">Log out</a></li>
-            {% else %}
-                <li class="nav-item"><a href="javascript:processAjaxData('/login/')">Log in</a></li>
-                <li class="nav-item"><a href="javascript:processAjaxData('/register/')">Register</a></li>
-            {% endif %}
-        </nav>
+            <nav>
+                <li class="nav-item"><a href="javascript:go_home()">Home</a></li>
+                <li class="nav-item"><a href="javascript:processAjaxData('/app/lists/')">Lists</a></li>
+                <li class="nav-item"><a href="javascript:processAjaxData('/app/experimental/quick_learn')">Quick
+                    learn</a></li>
+                <li class="nav-item"><a href="#">WIKI Lists</a></li>
+                {% if user.is_authenticated %}
+                    <li class="nav-item"><a href="javascript:processAjaxData('/user/profile/')">My profile</a></li>
+                    <li class="nav-item logout"><a class="logout" href="javascript:processAjaxData('/logout/')">Log
+                        out</a></li>
+                {% else %}
+                    <li class="nav-item"><a href="javascript:processAjaxData('/login/')">Log in</a></li>
+                    <li class="nav-item"><a href="javascript:processAjaxData('/register/')">Register</a></li>
+                {% endif %}
+            </nav>
         {% endif %}
     </div>
     <div class="content">
