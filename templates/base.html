@@ -38,7 +38,7 @@
         <nav>
             <li class="nav-item"><a href="javascript:go_home()">Home</a></li>
             <li class="nav-item"><a href="javascript:processAjaxData( '/app/lists/')">Lijsten</a></li>
-            <li class="nav-item"><a href="#">Snel leren</a></li>
+            <li class="nav-item"><a href="javascript:processAjaxData('/app/experimental/quick_learn')">Snel leren</a></li>
             {% if user.is_authenticated %}
                 <li class="nav-item"><a href="javascript:processAjaxData('/user/profile/')">Mijn profiel</a></li>
                 <li class="nav-item"><a href="javascript:processAjaxData('/logout/')">Uitloggen</a></li>
@@ -51,10 +51,10 @@
         <nav>
             <li class="nav-item"><a href="javascript:go_home()">Home</a></li>
             <li class="nav-item"><a href="javascript:processAjaxData('/app/lists/')">Lists</a></li>
-            <li class="nav-item"><a href="#">Quick learn</a></li>
+            <li class="nav-item"><a href="javascript:processAjaxData('/app/experimental/quick_learn')">Quick learn</a></li>
             {% if user.is_authenticated %}
                 <li class="nav-item"><a href="javascript:processAjaxData('/user/profile/')">My profile</a></li>
-                <li class="nav-item"><a href="javascript:processAjaxData('/logout/')">Log out</a></li>
+                <li class="nav-item logout"><a class="logout" href="javascript:processAjaxData('/logout/')">Log out</a></li>
             {% else %}
                 <li class="nav-item"><a href="javascript:processAjaxData('/login/')">Log in</a></li>
                 <li class="nav-item"><a href="javascript:processAjaxData('/register/')">Register</a></li>

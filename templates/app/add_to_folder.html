@@ -1,0 +1,19 @@
+{% load static %}
+<html>
+<head>
+    <link rel="stylesheet" href="{% static 'css/style_light.css' %}">
+
+</head>
+{% block content %}
+    <div class="modal_container">
+        <h2>{% if settings_lang == 0 %}Add to folder{% elif settings_lang == 1 %}Voeg toe aan het map{% endif %}</h2>
+        <br>
+        <form method="post" action="{{ action_url }}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" id="submit_folder"><i class="fas fa-plus"></i></button>
+        </form>
+    </div>
+
+{% endblock %}
+</html>

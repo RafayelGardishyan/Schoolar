@@ -21,3 +21,7 @@ class UserForm(forms.ModelForm):
         if commit:
             user.save()
         return user
+
+
+class ListAddForm(forms.Form):
+    lists = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple)
