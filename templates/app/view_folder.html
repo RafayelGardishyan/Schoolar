@@ -1,9 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
     <a class="link_button" href="/app/lists"><i class="fas fa-chevron-left"></i> &nbsp; {% if settings_lang == 0 %}Back to all lists{% elif settings_lang == 1 %}Terug naar alle lijsten{% endif %}</a>
-    
     <h1><i class="fas fa-folder"></i>&nbsp; {{ folder_name }}</h1>
     {% include 'app/applets/display_list_menu.html' %}
 {% endblock %}

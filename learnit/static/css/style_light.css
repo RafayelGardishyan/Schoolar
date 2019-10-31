@@ -324,6 +324,11 @@ progress::-webkit-progress-bar{
   cursor: pointer;
 }
 
+ol {
+    counter-reset: item;
+    list-style-type: none;
+}
+li { display: block; }
 /*.logout:hover{*/
 /*    background-color: #cd2c15;*/
 /*}*/

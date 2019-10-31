@@ -30,6 +30,7 @@ class List(models.Model):
     answer_subject = models.ForeignKey(to=Subject, on_delete=models.PROTECT, related_name='answer_subject')
     questions = models.ManyToManyField(to=Question)
 
+
     def __str__(self):
         return self.name
 
