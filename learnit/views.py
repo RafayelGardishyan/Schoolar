@@ -1,15 +1,14 @@
 import datetime
 import json
-import random
-import string
 
+from django.core.exceptions import ObjectDoesNotExist
 from django.core.mail import send_mail
-from django.http import BadHeaderError, JsonResponse
+from django.http import BadHeaderError, JsonResponse, HttpResponse
 from django.shortcuts import render, redirect
 from django.template.loader import get_template
 from django.utils import translation
 
-from .forms import UserForm
+from .forms import UserForm, ListAddForm
 from .models import Subject, \
     List, Question, TestResults, \
     Settings, Folder
@@ -381,3 +380,73 @@ def delete_folder(request, folder_id):
     return redirect("/app/lists")
 
     return None
+
+
+def view_folder(request, folder_id):
+    try:
+        folder = Folder.objects.get(id=folder_id)
+        lists = folder.lists.all()
+
+        context = {
+            "lists": lists,
+            "folder_name": folder.name,
+        }
+
+        return render(request, "app/view_folder.html", generate_context(request, context))
+
+    except ObjectDoesNotExist:
+        return redirect("/")
+
+
+def add_to_folder(request, folder_id):
+    if not request.user.is_authenticated:
+        return redirect("/login")
+
+    if request.method == "POST":
+        folder = Folder.objects.get(pk=folder_id)
+        for list in request.POST.getlist("lists"):
+            folder.lists.add(List.objects.get(pk=int(list)))
+        folder.save()
+        return redirect("/app/view/folder/" + str(folder_id))
+
+    ids = []
+    for item in Folder.objects.get(pk=folder_id).lists.all():
+        ids.append(item.pk)
+
+    lists = List.objects.filter(owner=request.user).exclude(id__in=ids)
+
+
+    form = ListAddForm()
+
+    form.fields['lists'].choices = [(x.id, x.name) for x in lists]
+
+    return render(request, 'app/add_to_folder.html', generate_context(request, {
+        'form': form,
+        'action_url': request.path
+    }))
+
+
+def quick_learn(request):
+    if not request.user.is_authenticated:
+        return redirect("/login")
+
+    new_list = List()
+    index = 0
+
+    new_list.name = "QuickLearn " + str(datetime.datetime.now())
+    new_list.owner = request.user
+    new_list.question_subject = Subject.objects.get(name="Quick Learn")
+    new_list.answer_subject = new_list.question_subject
+    new_list.save()
+
+    for results in TestResults.objects.filter(user=request.user):
+        for question in results.difficult_questions.all():
+            if index < 20:
+                index += 1
+            else:
+                break
+            new_list.questions.add(question)
+
+    new_list.save()
+
+    return redirect("/app/test/" + str(new_list.pk))

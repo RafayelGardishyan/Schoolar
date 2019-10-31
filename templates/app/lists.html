@@ -63,7 +63,26 @@
 
     let add_folder_page = httpGet("/app/add/folder")
 
+    let add_to_folder_page_url = "/app/folder/add/"
+
+    let current_page = add_folder_page
+
+
     document.getElementById("modal-inner").innerHTML = add_folder_page
+
+    function set_modal_page(folder_id=null) {
+        if (folder_id == null){
+            current_page = add_folder_page
+            return
+        }
+        current_page = httpGet(add_to_folder_page_url + folder_id)
+        document.getElementById("modal-inner").innerHTML = current_page
+    }
+
+    function open_modal_folder(folder_id) {
+        set_modal_page(folder_id)
+        open_modal()
+    }
 
     </script>
 
